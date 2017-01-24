@@ -124,6 +124,10 @@ $(function () {
 					else {
 						trainerPokemon.append($('<small>',{text: pokemon.last_scanned + " Days"}));
 					}
+					if (pokemon.gym_name !== null) {
+						trainerPokemon.append($('<br>'));
+						trainerPokemon.append($('<small>',{text: pokemon.gym_name}));
+					}
 					trainersPokemonsContainer.append(trainerPokemon);
 				}
 				
