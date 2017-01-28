@@ -47,10 +47,10 @@ foreach ($stats as $data) {
 	if ($data->timestamp > $yesterday) {
 		$labels[] = '"'.date('H:i', $data->timestamp).'"';
 
-		$veryCommonLocale = $locales->VERYCOMMON;
-		$commonLocale = $locales->COMMON;
-		$rareLocale = $locales->RARE;
-		$mythicLocale = $locales->MYTHIC;
+		$veryCommonLocale = 'Very common';//$locales->VERYCOMMON;
+		$commonLocale = 'Common';//$locales->COMMON;
+		$rareLocale = 'Rare';//$locales->RARE;
+		$mythicLocale = 'Mythic';//$locales->MYTHIC;
 
 		if (!empty($data->rarity_spawn->$veryCommonLocale)) {
 			$veco[]		= $data->rarity_spawn->$veryCommonLocale;
