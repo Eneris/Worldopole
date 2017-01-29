@@ -184,7 +184,7 @@ function printPokemon(pokemon,pokeimg_suffix){
 	else {
 		trainerPokemon.append($('<small>',{text: pokemon.last_scanned + " Days"}));
 	}
-	if (pokemon.gym_name !== null) {
+	if (pokemon.gym_name) {
 		trainerPokemon.append($('<br>'));
 		trainerPokemon.append($('<small>',{text: pokemon.gym_name.substr(0,25)+'&hellip;'}));
 	}
