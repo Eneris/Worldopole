@@ -18,7 +18,7 @@ if ($config_secret->captcha_key=="") {
 	$captcha['timestamp'] = $timestamp;
 	// get amount of accounts requiring a captcha
 	$req = "SELECT COUNT(*) as total "
-			. "FROM workerstatus WHERE message LIKE '%encountering a captcha%' "
+			. "FROM workerstatus WHERE message LIKE '%encountered a captcha%' "
 			. "AND last_modified >= UTC_TIMESTAMP() - INTERVAL 180 SECOND";
 	$result 	= $mysqli->query($req);
 	$data 		= $result->fetch_object();
