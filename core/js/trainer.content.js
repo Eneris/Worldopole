@@ -186,7 +186,7 @@ function printPokemon(pokemon,pokeimg_suffix){
 	}
 	if (pokemon.gym_name) {
 		trainerPokemon.append($('<br>'));
-		trainerPokemon.append($('<small>',{text: pokemon.gym_name.substr(0,25)+'&hellip;'}));
+		trainerPokemon.append($('<small>',{text: pokemon.gym_name.substr(0,25)+'…'}));
 	}
 	return trainerPokemon;
 }
