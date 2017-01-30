@@ -17,9 +17,7 @@ $config_secret = json_decode(file_get_contents($variables_secret));
 if ($config_secret->captcha_key=="") {
 	$captcha['timestamp'] = $timestamp;
 	// get amount of accounts requiring a captcha
-	$req = "SELECT COUNT(*) as total "
-			. "FROM workerstatus WHERE message LIKE '%encountered a captcha%' "
-			. "AND last_modified >= UTC_TIMESTAMP() - INTERVAL 180 SECOND";
+	$req = "SELECT SUM(accounts_captcha) as total FROM mainworker";
 	$result 	= $mysqli->query($req);
 	$data 		= $result->fetch_object();
 	$captcha['captcha_accs'] = $data->total;
