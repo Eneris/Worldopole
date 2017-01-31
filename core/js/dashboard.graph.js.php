@@ -43,38 +43,31 @@ foreach ($stats as $data) {
 		$labels_global[]	= '"'.date('D H:i', $data->timestamp).'"';
 		$total[]		= $data->pokemon_now;
 	}
-	
+
 	if ($data->timestamp > $yesterday) {
-		$labels[] = '"'.date('H:i', $data->timestamp).'"';
 
-		$veryCommonLocale = 'Very common';//$locales->VERYCOMMON;
-		$commonLocale = 'Common';//$locales->COMMON;
-		$rareLocale = 'Rare';//$locales->RARE;
-		$mythicLocale = 'Mythic';//$locales->MYTHIC;
+		$labels[] = '"'.date('H:i', $data->timestamp ).'"';
 
-		if (!empty($data->rarity_spawn->$veryCommonLocale)) {
-			$veco[]		= $data->rarity_spawn->$veryCommonLocale;
+		if (!empty($data->rarity_spawn->{'Very common'})) {
+			$veco[]		= $data->rarity_spawn->{'Very common'};
 		} else {
 			$veco[]		= 0;
 		}
-		
-	
-		if (!empty($data->rarity_spawn->$commonLocale)) {
-			$commo[]	= $data->rarity_spawn->$commonLocale;
+
+		if (!empty($data->rarity_spawn->Common)) {
+			$commo[]	= $data->rarity_spawn->Common;
 		} else {
 			$commo[]	= 0;
 		}
-		
-	
-		if (!empty($data->rarity_spawn->$rareLocale)) {
-			$rare[]		= $data->rarity_spawn->$rareLocale;
+
+		if (!empty($data->rarity_spawn->Rare)) {
+			$rare[]		= $data->rarity_spawn->Rare;
 		} else {
 			$rare[]		= 0;
 		}
-		
-	
-		if (!empty($data->rarity_spawn->$mythicLocale)) {
-			$myth[]		= $data->rarity_spawn->$mythicLocale;
+
+		if (!empty($data->rarity_spawn->Mythic)) {
+			$myth[]		= $data->rarity_spawn->Mythic;
 		} else {
 			$myth[]		= 0;
 		}
