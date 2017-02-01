@@ -15,7 +15,7 @@
 
         <p>1. Lege ein Lesezeichen mit dem folgenden Link an:</p>
 
-        <h3><a class="btn btn-primary" href="javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>/map/inject.js?'+Math.random();}}());">Captcha lösen</a></h3>
+        <h3><a class="btn btn-primary" href="javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>map/inject.js?'+Math.random();}}());">Captcha lösen</a></h3>
 
         <br>
 
@@ -23,7 +23,7 @@
 
         <p>Wenn das aus irgendwechen Gründen nicht geht, erstelle manuell ein Lesezeichen und füge folgende URL ein:</p>
 
-        <p><code>javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>/map/inject.js?'+Math.random();}}());</code></p>
+        <p><code>javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>map/inject.js?'+Math.random();}}());</code></p>
 
         <p>Das Lesezeichen muss nur einmal angelegt werden.</p>
 
