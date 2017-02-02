@@ -67,7 +67,7 @@ document.getElementById('bookmark-link').addEventListener('click', function(e) {
         window.external.AddFavorite(bookmarkURL, bookmarkTitle);
     } else {
         // Other browsers (mainly WebKit - Chrome/Safari)
-        alert('Bitte einfach den Knopf in deine Lesezeichenleiste ziehen. Alternativ musst du selbst ein Lesezeichen mit der rot dargestellten URL anlegen. Prüfe, ob das Lesezeichen dann auch wirklich mit javascript: beginnt.');
+        alert('Bitte einfach den Link in deine Lesezeichenleiste ziehen.\nAlternativ musst du selbst ein Lesezeichen mit der rot dargestellten URL anlegen.\nÜberprüfe, ob das Lesezeichen dann auch wirklich mit javascript: beginnt.');
     }
     return false;
 });
