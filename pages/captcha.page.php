@@ -15,7 +15,7 @@
 
         <p>1. Lege ein Lesezeichen mit dem folgenden Link an:</p>
 
-        <h3>--> <a class="js-bookmarkme" href="javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>map/inject.js?'+Math.random();}}());">Captcha lösen</a> <--</h3>
+        <h3>--> <a id="bookmark-link" href="javascript:(function(){if(window.location.href!='http://pgorelease.nianticlabs.com/'){window.location.href='http://pgorelease.nianticlabs.com/'}else{document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<?= HOST_URL ?>map/inject.js?'+Math.random();}}());">Captcha lösen</a> <--</h3>
 
         <br>
 
@@ -47,11 +47,10 @@
 </div>
 
 <script>
-$('.js-bookmarkme').click(function(e) {
+document.selectElementById('bookmark-link').addEventListener('click', function(e) {
     e.preventDefault();
     var bookmarkURL = e.target.href;
     var bookmarkTitle = e.target.innerHTML;
-
     if (window.sidebar && window.sidebar.addPanel) {
         // Firefox version < 23
         window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
@@ -70,7 +69,6 @@ $('.js-bookmarkme').click(function(e) {
         // Other browsers (mainly WebKit - Chrome/Safari)
         alert('Bitte einfach den Knopf in deine Lesezeichenleiste ziehen. Alternativ musst du selbst ein Lesezeichen mit der rot dargestellten URL anlegen. Prüfe, ob das Lesezeichen dann auch wirklich mit javascript: beginnt.');
     }
-
     return false;
 });
 </script>
