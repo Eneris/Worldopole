@@ -47,7 +47,7 @@
 </div>
 
 <script>
-document.selectElementById('bookmark-link').addEventListener('click', function(e) {
+document.getElementById('bookmark-link').addEventListener('click', function(e) {
     e.preventDefault();
     var bookmarkURL = e.target.href;
     var bookmarkTitle = e.target.innerHTML;
