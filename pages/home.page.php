@@ -134,7 +134,10 @@
 		} ?>
 	}, false);
 	function refreshStats() {
-		if (typeof $ === 'undefined') setTimeout(refreshStats, 1000);
+		if (typeof $ === 'undefined') {
+			setTimeout(refreshStats, 1000);
+			return;
+		}
 		$.getJSON('/map/workload', function(data) {
 	        $('#accounts_working').text(data.working);
 	    });
