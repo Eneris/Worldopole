@@ -6,7 +6,9 @@
 				<br>
 				<small><?= sprintf($config->infos->site_claim, $config->infos->city); ?></small>
 			</h1>
-
+			<h2 style="line-height:1em"><small>Oh nein. Es suchen aktuell nur <strong id="accounts_working" style="color:rgb(62, 150, 62)">0</strong> Accounts nach Pokémon. :(<br>
+			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
+			Hilf uns dabei, mehr Pokémon zu finden und <a href="/captcha">löse Captchas</a>.</small></h2>
 		</div>
 	</div>
 </header>
@@ -131,4 +133,14 @@
 		<?php
 		} ?>
 	}, false);
+	function refreshStats() {
+		$.getJSON('/map/workload', function(data) {
+	        $('#accounts_working').text(data.working);
+	    });
+	    $.getJSON('/map/get_stats', function(data) {
+	        $('#accounts_captcha').text(data.captcha);
+	    });
+	}
+	refreshStats();
+	setInterval(refreshStats, 10000);
 </script>
