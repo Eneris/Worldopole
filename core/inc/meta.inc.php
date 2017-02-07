@@ -215,6 +215,30 @@
 		<meta name="twitter:description" content="Hilf uns noch mehr Pokémon zu finden!" />
 		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | Captcha Info" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
+
+		<?php
+			break;
+		
+		case 'telegram':
+		?>
+		
+		<title><?= $config->infos->site_name ?> | Telegram Benachrichtigungen</title>
+		
+		<link rel="canonical" href="<?= HOST_URL ?>/telegram" />
+		<base href="<?= HOST_URL ?>">
+
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?= $config->infos->site_name ?> | Telegram Benachrichtigungen" />
+		<meta property="og:description" content="Telegram Channels" />
+		<meta property="og:url" content="<?= HOST_URL ?>/telegram" />
+		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
+		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
+		
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:description" content="Telegram Channels" />
+		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | Telegram Benachrichtigungen" />
+		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
 		<?php
 			break;

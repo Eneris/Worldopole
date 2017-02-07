@@ -44,7 +44,7 @@
         <h2>Über was kann ich mich benachrichtigen lassen?</h2>
 
         <h3><a href="https://t.me/pogochemnitzalerts">@PoGoChemnitzAlerts</a></h3>
-        <p>Dieser Channel benachrichtigt dich über seltene Pokémon.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
+        <p>Verpasse nie mehr ein seltenes Pokémon. Dieser Channel informiert dich sofort, wenn eines in Chemnitz auftaucht.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
         <h3>Aktuell sind folgende Pokémon auf unserer Watch-List:</h3>
         <div>
             <img src="core/pokemons/3.png" width=60>
@@ -107,11 +107,11 @@
         <br>
 
         <h3><a href="https://t.me/pogochemnitzgyms">@PoGoChemnitzGyms</a></h3>
-        <p>Dieser Channel benachrichtigt dich wenn Arenen besiegt wurden und von einem anderen Team nun kontrolliert werden.<br>Es werden dir das besiegt als auch das neue Team angezeigt, sowie natürlich die Position der Arena.</p>
+        <p>Dieser Channel benachrichtigt dich wenn Arenen besiegt wurden und nun von einem anderen Team kontrolliert werden.<br>Es werden dir das besiegte als auch das neue Team angezeigt sowie natürlich die Position der Arena.</p>
 
         <br>
 
         <h3><a href="https://t.me/pogochemnitzlures">@PoGoChemnitzLures</a></h3>
-        <p>Dieser Channel benachrichtigt dich wenn irgendwo in Chemnitz ein Lockmodul gezündet wurde.<br>Es werden dir Restzeit sowie die Position auf einer Karte dargestellt.</p>
+        <p>Hier erfährst du sofort, wenn irgendwo in Chemnitz ein Lockmodul gezündet wurde.<br>Es werden dir Restzeit sowie die Position auf einer Karte dargestellt.</p>
 
 </div>
