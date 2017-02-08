@@ -107,5 +107,15 @@
 "YEARS": "years",
 "TIME_AGO": "%s ago",
 "TIME_LEFT": "%s left",
-"LOADING": "Loading"
+"LOADING": "Loading",
+"TELEGRAM_METATITLE": "Telegram Notifications",
+"TELEGRAM_METADESC": "Telegram Notification Channels",
+"CAPTCHA_METATITLE": "Captcha Info",
+"CAPTCHA_METADESC": "Help us finding even more Pokémon!",
+"SITE_TITLE": "We ❤️ <strong>Pokémon</strong> and Data",
+"SITE_CLAIM": "Find all collected and proccessed data about PokémonGo in %s.",
+"MAP_DESC": "<big><strong>Real-time</strong> Map</big><br>Map with current Pokémon",
+"NAV_HOME": "Home",
+"NAV_CAPTCHA": "Captcha Info",
+"NAV_TELEGRAM": "Telegram"
 }

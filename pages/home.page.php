@@ -1,10 +1,23 @@
+<? if (isset($config->infos->site_title_locale)) {
+	$locale = $config->infos->site_title_locale;
+	$site_title = $locales->$locale;
+} elseif (isset($config->infos->site_title)) {
+	$site_title = $config->homewidget->text;
+}?>
+<? if (isset($config->infos->site_claim_locale)) {
+	$locale = $config->infos->site_claim_locale;
+	$site_claim = $locales->$locale;
+} elseif (isset($config->infos->site_claim)) {
+	$site_claim = $config->homewidget->text;
+}?>
+
 <header id="single-header">
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<h1>
-				<?= $config->infos->site_title ?>
+				<?= $site_title ?>
 				<br>
-				<small><?= sprintf($config->infos->site_claim, $config->infos->city); ?></small>
+				<small><?= sprintf($site_claim, $config->infos->city); ?></small>
 			</h1>
 			<h2 style="line-height:1em"><small>Oh nein. Es suchen aktuell nur <strong id="accounts_working" style="color:rgb(62, 150, 62)">0</strong> Accounts nach Pokémon. :(<br>
 			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
@@ -39,11 +52,16 @@
 			<?= sprintf($locales->WIDGET_LURES_SUB, $config->infos->city); ?></p>
 		</a>
 	</div>
-
+<? if (isset($config->homewidget->locale)) {
+	$locale = $config->homewidget->locale;
+	$homewidget_text = $locales->$locale;
+} elseif (isset($config->homewidget->text)) {
+	$homewidget_text = $config->homewidget->text;
+}?>
 	<div class="col-md-3 col-sm-6 col-xs-12 big-data">
 		<a href="<?= $config->homewidget->url ?>" target="_blank">
 			<img src="<?= $config->homewidget->image ?>" alt="<?= $config->homewidget->image_alt ?>" width=50 class="big-icon">
-			<p><?= $config->homewidget->text ?></p>
+			<p><?= $homewidget_text ?></p>
 		</a>
 	</div>
 

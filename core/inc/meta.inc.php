@@ -205,15 +205,15 @@
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?= $config->infos->site_name ?> | Captcha Info" />
-		<meta property="og:description" content="Hilf uns noch mehr Pokémon zu finden!" />
+		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->CAPTCHA_METATITLE ?>" />
+		<meta property="og:description" content="<?= $locales->CAPTCHA_METADESC ?>" />
 		<meta property="og:url" content="<?= HOST_URL ?>/captcha" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:description" content="Hilf uns noch mehr Pokémon zu finden!" />
-		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | Captcha Info" />
+		<meta name="twitter:description" content="<?= $locales->CAPTCHA_METADESC ?>" />
+		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= $locales->CAPTCHA_METATITLE ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 
 		<?php
@@ -229,15 +229,15 @@
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?= $config->infos->site_name ?> | Telegram Benachrichtigungen" />
-		<meta property="og:description" content="Telegram Channels" />
+		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->TELEGRAM_METATITLE ?>" />
+		<meta property="og:description" content="<?= $locales->TELEGRAM_METADESC ?>" />
 		<meta property="og:url" content="<?= HOST_URL ?>/telegram" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:description" content="Telegram Channels" />
-		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | Telegram Benachrichtigungen" />
+		<meta name="twitter:description" content="<?= $locales->TELEGRAM_METADESC ?>" />
+		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= $locales->TELEGRAM_METATITLE ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
 		<?php
