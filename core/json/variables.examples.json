@@ -25,8 +25,10 @@
 		"timezone"		:	"Europe/Paris",
 		"max_pokemon"		:	151,
 		"pokeimg_suffix"	:	"_flat.png",
-		"mythic_recents"	:	true,
-		"recents_show_iv"	:	false,
+		"recents_show_iv"	:	true,
+		"recents_filter"	:	true,
+		"recents_filter_rating"	:	8,
+		"recents_filter_rarity"	:	0.01,
 		"captcha_support"	:	false,
 		"iv_numbers"		:	false,
 		"forced_lang"		:	""
