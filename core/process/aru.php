@@ -228,12 +228,27 @@ switch ($request) {
 							</div>';
 						}
 					} else {
+						if ($config->system->iv_numbers) {
+							$html .= '
+							<div class="progress" style="height: 15px; margin-bottom: 0">
+								<div title="Attack IV: not available" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'. $iv->attack .'" aria-valuemin="0" aria-valuemax="45" style="width: '. (100/3)  .'%; line-height: 16px";>
+									<span class="sr-only">Attack IV: not available</span>?
+								</div>
+								<div title="Defense IV: not available" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'. $iv->defense .'" aria-valuemin="0" aria-valuemax="45" style="width: '. (100/3)  .'%; line-height: 16px";>
+									<span class="sr-only">Defense IV: not available</span>?
+								</div>
+								<div title="Stamina IV: not available" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'. $iv->stamina .'" aria-valuemin="0" aria-valuemax="45" style="width: '. (100/3)  .'%; line-height: 16px";>
+									<span class="sr-only">Stamina IV: not available</span>?
+								</div>
+							</div>';
+						} else {
 						$html .= '
 					    <div class="progress" style="height: 6px; width: 80%; margin: 5px auto 15px auto;">
 						    <div title="IV not available" class="progress-bar" role="progressbar" style="width: 100%; background-color: rgb(210,210,210);" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
 							    <span class="sr-only">IV not available</span>
 						    </div>
 					    </div>';
+						}
 					}
 				}
 				$html .= '
@@ -332,7 +347,7 @@ switch ($request) {
 
 
 	case 'gym_map':
-		$req 		= "SELECT gym_id, team_id, guard_pokemon_id, gym_points, latitude, longitude, (CONVERT_TZ(last_modified, '+00:00', '".$time_offset."')) as last_modified FROM gym";
+		$req 		= "SELECT gym_id, team_id, guard_pokemon_id, gym_points, latitude, longitude, (CONVERT_TZ(last_scanned, '+00:00', '".$time_offset."')) as last_scanned FROM gym";
 		$result 	= $mysqli->query($req);
 
 
@@ -405,8 +420,8 @@ switch ($request) {
 				<p style="font-weight:400;color:'.$color.'">'.$team.'</p>
 				<p>Protected by</p>
 				<a href="pokemon/'.$data->guard_pokemon_id.'"><img src="'.$img.'" height="40" style="display:inline-block;margin-bottom:10px;" alt="Guard Pokemon image"></a>
-				<p>Level : '.$data->gym_level.' | Prestige : '.$data->gym_points.'<br>
-				Last modified : '.$data->last_modified.'</p>
+				<p>Level: '.$data->gym_level.' | Prestige : '.$data->gym_points.'<br>
+				Last scanned: '.$data->last_scanned.'</p>
 			</div>
 
 			';
@@ -442,7 +457,7 @@ switch ($request) {
 
 	case 'gym_defenders':
 		$gym_id = $mysqli->real_escape_string($_GET['gym_id']);
-		$req 		= "SELECT gymdetails.name as name, gymdetails.description as description, gym.gym_points as points, gymdetails.url as url, gym.team_id as team, (CONVERT_TZ(gym.last_modified, '+00:00', '".$time_offset."')) as last_modified, gym.guard_pokemon_id as guard_pokemon_id FROM gymdetails LEFT JOIN gym on gym.gym_id = gymdetails.gym_id WHERE gym.gym_id='".$gym_id."'";
+		$req 		= "SELECT gymdetails.name as name, gymdetails.description as description, gym.gym_points as points, gymdetails.url as url, gym.team_id as team, (CONVERT_TZ(gym.last_scanned, '+00:00', '".$time_offset."')) as last_scanned, gym.guard_pokemon_id as guard_pokemon_id FROM gymdetails LEFT JOIN gym on gym.gym_id = gymdetails.gym_id WHERE gym.gym_id='".$gym_id."'";
 		$result 	= $mysqli->query($req);
 		$gymData['gymDetails']['gymInfos'] = false;
 		while ($data = $result->fetch_object()) {
@@ -455,7 +470,7 @@ switch ($request) {
 			}
 			$gymData['gymDetails']['gymInfos']['points'] = $data->points;
 			$gymData['gymDetails']['gymInfos']['level'] = 0;
-			$gymData['gymDetails']['gymInfos']['last_modified'] = $data->last_modified;
+			$gymData['gymDetails']['gymInfos']['last_scanned'] = $data->last_scanned;
 			$gymData['gymDetails']['gymInfos']['team'] = $data->team;
 			$gymData['gymDetails']['gymInfos']['guardPokemonId'] = $data->guard_pokemon_id;
 			if ($data->points < 2000) {
@@ -484,7 +499,7 @@ switch ($request) {
 		$req 		= "SELECT DISTINCT gympokemon.pokemon_uid, "
 				. "pokemon_id, iv_attack, iv_defense, iv_stamina, MAX(cp) as cp, gymmember.gym_id "
 				. "FROM gympokemon inner join gymmember on gympokemon.pokemon_uid=gymmember.pokemon_uid "
-				. "GROUP BY gympokemon.pokemon_uid"
+				. "GROUP BY gympokemon.pokemon_uid, pokemon_id, iv_attack, iv_defense, iv_stamina, gym_id"
 				. " HAVING gymmember.gym_id='".$gym_id."' ORDER BY cp DESC";
 		$result 	= $mysqli->query($req);
 		$i=0;
@@ -515,7 +530,7 @@ switch ($request) {
 									<span class="sr-only">KP IV : '. $data->iv_stamina .'</span>'. $data->iv_stamina .'
 								</div>
 							</div>
-						</div>';       
+						</div>';
 				}
 				else {
 					$gymData['infoWindow'] .= '
