@@ -1,6 +1,6 @@
-<?
+<?php
 // get sort order
-$top_possible_sort = array('IV', 'individual_attack', 'individual_defense', 'individual_stamina', 'move_1', 'move_2', 'disappear_time', 'name', 'cp' 'iv_attack', 'iv_defense', 'iv_stamina', 'last_seen');
+$top_possible_sort = array('IV', 'individual_attack', 'individual_defense', 'individual_stamina', 'move_1', 'move_2', 'disappear_time', 'name', 'cp', 'iv_attack', 'iv_defense', 'iv_stamina', 'last_seen');
 $top_order = isset($_GET['order']) ? $_GET['order'] : '';
 $top_order_by = in_array($top_order, $top_possible_sort) ? $_GET['order'] : 'IV';
 $top_direction = isset($_GET['direction']) ? 'DESC' : 'ASC';
