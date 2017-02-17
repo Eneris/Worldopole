@@ -20,14 +20,14 @@
 
 <?php if (!isset($_GET['page'])) { ?>
 
-		<title><?= $config->infos->site_name ?> | <?= strip_tags($config->infos->site_title); ?></title>
+		<title><?= $config->infos->site_name ?> | <?= strip_tags($locales->SITE_TITLE); ?></title>
 		
 		<link rel="canonical" href="<?= HOST_URL ?>" />
 		<base href="<?= HOST_URL ?>">
 		
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= strip_tags($config->infos->site_title); ?> " />
+		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= strip_tags($locales->SITE_TITLE); ?> " />
 		<meta property="og:description" content="<?= sprintf($locales->METADESCRIPTION, $config->infos->city); ?>" />
 
 		<meta property="og:url" content="<?= HOST_URL ?>/" />
@@ -39,9 +39,8 @@
 	
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:description" content="<?= sprintf($locales->METADESCRIPTION, $config->infos->city); ?>" />
-		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= strip_tags($config->infos->site_title); ?> " />
+		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= strip_tags($locales->SITE_TITLE); ?> " />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
-
 
 <?php } else {
 	switch ($_GET['page']) {
@@ -50,7 +49,6 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->FIND ?> <?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?></title>
 
-		
 		<link rel="canonical" href="<?= HOST_URL ?>pokemon/<?= $pokemon->id ?>" />
 		<base href="<?= HOST_URL ?>">
 
@@ -67,14 +65,12 @@
 		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= $pokemon->name ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/pokemons/<?= $pokemon->id ?>.png" />
 		
-		
 		<?php
 			break;
 		
 		case 'pokestops':
 		?>
 		
-
 		<title><?= $config->infos->site_name ?> | <?= sprintf($locales->POKESTOPS_METATITLE, $config->infos->city); ?></title>
 		
 		<link rel="canonical" href="<?= HOST_URL ?>/pokestops" />
@@ -93,7 +89,6 @@
 		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= sprintf($locales->POKESTOPS_METATITLE, $config->infos->city); ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 
-		
 		<?php
 			break;
 		
@@ -104,7 +99,6 @@
 		
 		<link rel="canonical" href="<?= HOST_URL ?>/gym" />
 		<base href="<?= HOST_URL ?>">
-		
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
@@ -167,7 +161,6 @@
 		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= $locales->NAV_DASHBOARD ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 
-
 		<?php
 			break;
 		
@@ -198,7 +191,7 @@
 		case 'captcha':
 		?>
 		
-		<title><?= $config->infos->site_name ?> | Captcha Info</title>
+		<title><?= $config->infos->site_name ?> | <?= $locales->CAPTCHA_METATITLE ?></title>
 		
 		<link rel="canonical" href="<?= HOST_URL ?>/captcha" />
 		<base href="<?= HOST_URL ?>">
@@ -222,7 +215,7 @@
 		case 'telegram':
 		?>
 		
-		<title><?= $config->infos->site_name ?> | Telegram Benachrichtigungen</title>
+		<title><?= $config->infos->site_name ?> | <?= $locales->TELEGRAM_METATITLE ?></title>
 		
 		<link rel="canonical" href="<?= HOST_URL ?>/telegram" />
 		<base href="<?= HOST_URL ?>">
@@ -244,6 +237,5 @@
 			break;
 	}
 }
-	
 	
 ?>
