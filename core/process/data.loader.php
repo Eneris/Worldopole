@@ -221,7 +221,7 @@ if (!empty($page)) {
 			
 			$result = $mysqli->query($req);
 			$top = array();
-			while($data = $result->fetch_object()) {
+			while ($data = $result->fetch_object()) {
 				$top[] = $data;
 			}
 			
@@ -244,20 +244,21 @@ if (!empty($page)) {
 			
 			$result = $mysqli->query($req);
 			$toptrainer = array();
-			while($data = $result->fetch_object()) {
+			while ($data = $result->fetch_object()) {
 				$toptrainer[] = $data;
 			}
 			
 			$moves_file	= SYS_PATH.'/core/json/moves.json';
 			
 			$moves = json_decode(file_get_contents($moves_file));
+
 			$move = new stdClass();
-			foreach($moves as $move_id => $move_name) {
-				$move->$move_id = new stdClass();
-				$move->$move_id->name = $move_name->name;
-			}  
-			
-			break;
+			foreach ($moves as $move_id => $move_name) {
+				if (isset($move_name)) {
+					$move->$move_id = new stdClass();
+					$move->$move_id->name = $move_name->name;
+				}
+			}
 
 
 
