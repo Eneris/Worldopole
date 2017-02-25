@@ -90,8 +90,7 @@ foreach ($stats as $data) {
 
 		if (!empty($data->rarity_spawn->Mythic)) {
 			$myth[]		= $data->rarity_spawn->Mythic;
-		}
-		else {
+		} else {
 			$myth[]		= 0;
 		}
 	}
