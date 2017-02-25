@@ -89,6 +89,7 @@
             <img src="core/pokemons/114_go.png" width=60>
             <img src="core/pokemons/115_go.png" width=60>
             <img src="core/pokemons/121_go.png" width=60>
+            <img src="core/pokemons/123_go.png" width=60>
             <img src="core/pokemons/128_go.png" width=60>
             <img src="core/pokemons/130_go.png" width=60>
             <img src="core/pokemons/131_go.png" width=60>
