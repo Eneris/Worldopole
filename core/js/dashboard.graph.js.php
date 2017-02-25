@@ -68,33 +68,25 @@ foreach ($stats as $data) {
 	}
 
 	if ($data->timestamp > $yesterday) {
-
 		$labels[] = '"'.date('H:i', $data->timestamp ).'"';
-
 
 		if (!empty($data->rarity_spawn->{'Very common'})) {
 			$veco[]		= $data->rarity_spawn->{'Very common'};
-		}
-		else {
+		} else {
 			$veco[]		= 0;
 		}
 
-
 		if (!empty($data->rarity_spawn->Common)) {
 			$commo[]	= $data->rarity_spawn->Common;
-		}
-		else {
+		} else {
 			$commo[]	= 0;
 		}
 
-
 		if (!empty($data->rarity_spawn->Rare)) {
 			$rare[]		= $data->rarity_spawn->Rare;
-		}
-		else {
+		} else {
 			$rare[]		= 0;
 		}
-
 
 		if (!empty($data->rarity_spawn->Mythic)) {
 			$myth[]		= $data->rarity_spawn->Mythic;
