@@ -128,7 +128,6 @@
             <img src="core/pokemons/180_go.png" width=60>
             <img src="core/pokemons/181_go.png" width=60>
             <img src="core/pokemons/182_go.png" width=60>
-            <img src="core/pokemons/185_go.png" width=60>
             <img src="core/pokemons/186_go.png" width=60>
             <img src="core/pokemons/188_go.png" width=60>
             <img src="core/pokemons/189_go.png" width=60>
