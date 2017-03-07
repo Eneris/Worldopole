@@ -219,7 +219,7 @@ if (!empty($page)) {
 					WHERE pokemon_id = '".$pokemon_id."' AND move_1 IS NOT NULL AND move_1 != '0'   # Check move_1 is enough, we don't want any NULL here
 					GROUP BY encounter_id
 					ORDER BY $top_order_by $top_direction, disappear_time DESC  # Secondary sort by date
-					LIMIT 0,50";
+					LIMIT 0,25";
 			
 			$result = $mysqli->query($req);
 			$top = array();
@@ -242,7 +242,7 @@ if (!empty($page)) {
 					WHERE pokemon_id = '".$pokemon_id."'
 					GROUP BY pokemon_uid
 					ORDER BY $best_order_by $best_direction, trainer_name ASC   # Secondary sort by name
-					LIMIT 0,50";
+					LIMIT 0,25";
 			
 			$result = $mysqli->query($req);
 			$toptrainer = array();

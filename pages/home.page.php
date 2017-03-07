@@ -10,6 +10,8 @@
 			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
 			Hilf uns dabei, mehr Pokémon zu finden und <a href="/captcha">löse Captchas</a>.</small></h2>
 			<br>
+			<h3><font style="color:rgb(210,118,118)">NEU!</font> Unsere <a href="/PoGoChemnitz.v1.0.1.apk">Android App</a></h3>
+			<br>
 			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogo.use.ovh">help@pogo.use.ovh</a></h4>
 		</div>
 	</div>

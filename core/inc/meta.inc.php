@@ -47,7 +47,7 @@
 		case 'pokemon':
 		?>
 		
-		<title><?= $config->infos->site_name ?> | <?= $locales->FIND ?> <?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?></title>
+		<title><?= $config->infos->site_name ?> | <?= $locales->FIND ?><?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?></title>
 
 		<link rel="canonical" href="<?= HOST_URL ?>pokemon/<?= $pokemon->id ?>" />
 		<base href="<?= HOST_URL ?>">
@@ -55,13 +55,13 @@
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $pokemon->name ?>" />
-		<meta property="og:description" content="<?= $locales->FIND ?> <?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?>" />
+		<meta property="og:description" content="<?= $locales->FIND ?><?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?>" />
 		<meta property="og:url" content="<?= HOST_URL ?>/pokemon/<?= $pokemon->id ?>" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/pokemons/<?= $pokemon->id ?>.png" />
 		
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:description" content="<?= $locales->FIND ?> <?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?>" />
+		<meta name="twitter:description" content="<?= $locales->FIND ?><?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?>" />
 		<meta name="twitter:title" content="<?= $config->infos->site_name ?> | <?= $pokemon->name ?>" />
 		<meta name="twitter:image" content="<?= HOST_URL ?>core/pokemons/<?= $pokemon->id ?>.png" />
 		
