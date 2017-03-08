@@ -6,9 +6,19 @@
 				<br>
 				<small><?= sprintf($locales->SITE_CLAIM, $config->infos->city); ?></small>
 			</h1>
+			<br>
+			<!--
 			<h2 style="line-height:1em"><small>Oh nein. Es suchen aktuell nur <strong id="accounts_working" style="color:rgb(62, 150, 62)">0</strong> Accounts nach Pokémon. :(<br>
 			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
 			Hilf uns dabei, mehr Pokémon zu finden und <a href="/captcha">löse Captchas</a>.</small></h2>
+			-->
+			<h2 style="line-height:.8em"><small style="font-size:.65em">Da der Betrieb diese Seite leider auch finanzielle Belastungen erzeugt (Serverkosten, Domain, API-Zugriff, Wartung, etc.), würden wir uns über deine Unterstützung durch eine kleine Spende freuen.</small></h2>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="KUFAUVWG2XSU4">
+				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
+				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+			</form>
 			<br>
 			<h3><font style="color:rgb(210,118,118)">NEU!</font> Unsere <a href="/PoGoChemnitz.v1.0.1.apk">Android App</a></h3>
 			<br>
