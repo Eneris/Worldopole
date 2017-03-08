@@ -12,7 +12,7 @@
 			<br>
 			<h3><font style="color:rgb(210,118,118)">NEU!</font> Unsere <a href="/PoGoChemnitz.v1.0.1.apk">Android App</a></h3>
 			<br>
-			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogo.use.ovh">help@pogo.use.ovh</a></h4>
+			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a></h4>
 		</div>
 	</div>
 </header>
