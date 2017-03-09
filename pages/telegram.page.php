@@ -11,24 +11,50 @@
 
 <div class="row">
 
-            <div class="col-md-4 col-sm-4 col-xs-12 big-data">
+            <div class="col-md-12 col-sm-12 col-xs-12 big-data">
                 <a href="https://t.me/pogochemnitzalerts" target="_blank">
                     <img src="/core/img/telegramicon.png" alt="Telegram Pokémon Alarm Channel" width="50" class="big-icon">
                     <p><big><strong>@PoGoChemnitzAlerts</strong></big><br>Pokémon</p>
                 </a>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-12 big-data" style="border-right:1px lightgray solid;border-left:1px lightgray solid;">
+</div>
+
+<div class="row">
+
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data">
                 <a href="https://t.me/pogochemnitzgyms" target="_blank">
                     <img src="/core/img/telegramicon.png" alt="Telegram Arenen Alarm Channel" width="50" class="big-icon">
                     <p><big><strong>@PoGoChemnitzGyms</strong></big><br>Arenen</p>
                 </a>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-12 big-data">
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data" style="border-left:1px lightgray solid;">
                 <a href="https://t.me/pogochemnitzlures" target="_blank">
                     <img src="/core/img/telegramicon.png" alt="Telegram Lockmodule Alarm Channel" width="50" class="big-icon">
                     <p><big><strong>@PoGoChemnitzLures</strong></big><br>Lockmodule</p>
+                </a>
+            </div>
+
+</div>
+
+<div class="row" style="text-align:center">
+    <h2>Spezial Channel</h2>
+</div>
+
+<div class="row">
+
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data">
+                <a href="https://t.me/pogochemnitzhighiv" target="_blank">
+                    <img src="/core/img/telegramicon.png" alt="Telegram High IV Alarm Channel" width="50" class="big-icon">
+                    <p><big><strong>@PoGoChemnitzHighIV</strong></big><br>IV Werte über 90%</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data" style="border-left:1px lightgray solid;">
+                <a href="https://t.me/pogochemnitzperfect" target="_blank">
+                    <img src="/core/img/telegramicon.png" alt="Telegram Perfect Alarm Channel" width="50" class="big-icon">
+                    <p><big><strong>@PoGoChemnitzPerfect</strong></big><br>Perfekte IV Werte</p>
                 </a>
             </div>
 
@@ -188,5 +214,15 @@
 
         <h3><a href="https://t.me/pogochemnitzlures">@PoGoChemnitzLures</a></h3>
         <p>Hier erfährst du sofort, wenn irgendwo in Chemnitz ein Lockmodul gezündet wurde.<br>Es werden dir Restzeit sowie die Position auf einer Karte dargestellt.</p>
+
+        <br>
+
+        <h3><a href="https://t.me/pogochemnitzhighiv">@PoGoChemnitzHighIV</a></h3>
+        <p>Auf der Suche nach wirklich guten Pokémon? Hier bist du richtig. Es werden nur Pokémon mit IV-Werten über 90% angezeigt.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
+
+        <br>
+
+        <h3><a href="https://t.me/pogochemnitzperfect">@PoGoChemnitzPerfect</a></h3>
+        <p>Im Perfect Channel gibt es nur die richtig seltenen, perfekten Pokémon mit den besten IV-Werten.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
 
 </div>
