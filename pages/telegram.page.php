@@ -232,4 +232,9 @@
         <h3><a href="https://t.me/pogochemnitzperfect">@PoGoChemnitzPerfect</a></h3>
         <p>Im Perfect Channel gibt es nur die richtig seltenen, perfekten Pokémon mit den besten IV-Werten.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
 
+        <br>
+
+        <h3><a href="https://t.me/joinchat/AAAAAEGDicR1Rjm_mM2I8A">PoGo Chemnitz Unown</a></h3>
+        <p>Im Icognito Channel werden dir ausschließlich Icognito (Unown) Pokémon angezeigt.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
+
 </div>
