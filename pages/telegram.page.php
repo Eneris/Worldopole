@@ -58,6 +58,13 @@
                 </a>
             </div>
 
+            <div class="col-md-12 col-sm-12 col-xs-12 big-data">
+                <a href="https://t.me/joinchat/AAAAAEGDicR1Rjm_mM2I8A" target="_blank">
+                    <img src="/core/img/telegramicon.png" alt="Telegram Icognito Alarm Channel" width="50" class="big-icon">
+                    <p><big><strong>PoGo Chemnitz Unown</strong></big><br>Nur Icognito</p>
+                </a>
+            </div>
+
 </div>
 
 <div class="row" style="text-align:center">
