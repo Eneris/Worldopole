@@ -30,7 +30,7 @@
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= strip_tags($locales->SITE_TITLE); ?> " />
 		<meta property="og:description" content="<?= sprintf($locales->METADESCRIPTION, $config->infos->city); ?>" />
 
-		<meta property="og:url" content="<?= HOST_URL ?>/" />
+		<meta property="og:url" content="<?= HOST_URL ?>" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 
@@ -56,7 +56,7 @@
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $pokemon->name ?>" />
 		<meta property="og:description" content="<?= $locales->FIND ?><?= $pokemon->name ?> <?= sprintf($locales->INCITY, $config->infos->city); ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/pokemon/<?= $pokemon->id ?>" />
+		<meta property="og:url" content="<?= HOST_URL ?>pokemon/<?= $pokemon->id ?>" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/pokemons/<?= $pokemon->id ?>.png" />
 		
@@ -73,14 +73,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= sprintf($locales->POKESTOPS_METATITLE, $config->infos->city); ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/pokestops" />
+		<link rel="canonical" href="<?= HOST_URL ?>pokestops" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= sprintf($locales->POKESTOPS_METATITLE, $config->infos->city); ?>" />
 		<meta property="og:description" content="<?= sprintf($locales->POKESTOPS_METADESC, $config->infos->city); ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/pokestops" />
+		<meta property="og:url" content="<?= HOST_URL ?>pokestops" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -97,14 +97,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->GYMS_METATITLE ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/gym" />
+		<link rel="canonical" href="<?= HOST_URL ?>gym" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->GYMS_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->GYMS_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/gym" />
+		<meta property="og:url" content="<?= HOST_URL ?>gym" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -121,14 +121,14 @@
 
 		<title><?= $config->infos->site_name ?> | <?= $locales->TRAINERS_METATITLE ?></title>
 
-		<link rel="canonical" href="<?= HOST_URL ?>/trainer" />
+		<link rel="canonical" href="<?= HOST_URL ?>trainer" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->TRAINERS_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->TRAINERS_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/trainer" />
+		<meta property="og:url" content="<?= HOST_URL ?>trainer" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 
@@ -145,14 +145,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->NAV_DASHBOARD ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/dashboard" />
+		<link rel="canonical" href="<?= HOST_URL ?>dashboard" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->NAV_DASHBOARD ?>" />
 		<meta property="og:description" content="Data lover? We've got plenty for you!" />
-		<meta property="og:url" content="<?= HOST_URL ?>/dashboard" />
+		<meta property="og:url" content="<?= HOST_URL ?>dashboard" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -169,14 +169,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->POKEDEX_METATITLE ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/pokemon" />
+		<link rel="canonical" href="<?= HOST_URL ?>pokemon" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->POKEDEX_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->POKEDEX_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/pokemon" />
+		<meta property="og:url" content="<?= HOST_URL ?>pokemon" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -193,14 +193,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->CAPTCHA_METATITLE ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/captcha" />
+		<link rel="canonical" href="<?= HOST_URL ?>captcha" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->CAPTCHA_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->CAPTCHA_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/captcha" />
+		<meta property="og:url" content="<?= HOST_URL ?>captcha" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -217,14 +217,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->TELEGRAM_METATITLE ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/telegram" />
+		<link rel="canonical" href="<?= HOST_URL ?>telegram" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->TELEGRAM_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->TELEGRAM_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/telegram" />
+		<meta property="og:url" content="<?= HOST_URL ?>telegram" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -241,14 +241,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->TERMS_METATITLE ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/terms" />
+		<link rel="canonical" href="<?= HOST_URL ?>terms" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->TERMS_METATITLE ?>" />
 		<meta property="og:description" content="<?= $locales->TERMS_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/terms" />
+		<meta property="og:url" content="<?= HOST_URL ?>terms" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
@@ -265,14 +265,14 @@
 		
 		<title><?= $config->infos->site_name ?> | <?= $locales->NAV_NESTS ?></title>
 		
-		<link rel="canonical" href="<?= HOST_URL ?>/pokemon" />
+		<link rel="canonical" href="<?= HOST_URL ?>nests" />
 		<base href="<?= HOST_URL ?>">
 
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= $config->infos->site_name ?> | <?= $locales->NAV_NESTS ?>" />
 		<meta property="og:description" content="<?= $locales->NESTS_METADESC ?>" />
-		<meta property="og:url" content="<?= HOST_URL ?>/pokemon" />
+		<meta property="og:url" content="<?= HOST_URL ?>nests" />
 		<meta property="og:site_name" content="<?= $config->infos->site_name ?>" />
 		<meta property="og:image" content="<?= HOST_URL ?>core/img/logo.jpg" />
 		
