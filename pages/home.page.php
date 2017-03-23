@@ -23,13 +23,6 @@
 				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
 				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 			</form>
-			<!-- Responsive Ad -->
-			<ins class="adsbygoogle"
-				style="display:block"
-				data-ad-client="ca-pub-5312537636379418"
-				data-ad-slot="1569833480"
-				data-ad-format="auto"></ins>
-			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 		</div>
 	</div>
 </header>
