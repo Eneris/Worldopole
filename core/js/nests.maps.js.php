@@ -16,7 +16,9 @@ var map
 	$config->system->forced_lang = $lang;
 
 	# Send Javascript header
+	header("Cache-Control: max-age=900");
 	header('Content-type: text/javascript');
+
 	# Load Config
 	include_once('../../config.php');
 	include_once('../process/locales.loader.php');

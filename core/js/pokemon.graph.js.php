@@ -9,6 +9,7 @@ if (!isset($_GET['id'])) {
 }
 
 # Send Javascript header
+header("Cache-Control: max-age=900");
 header('Content-type: text/javascript');
 
 # Load Config
