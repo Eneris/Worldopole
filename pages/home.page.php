@@ -182,6 +182,7 @@
 		<?php
 		} ?>
 	}, false);
+	/*
 	function refreshStats() {
 		if (typeof $ === 'undefined') {
 			setTimeout(refreshStats, 1000);
@@ -196,4 +197,5 @@
 	}
 	refreshStats();
 	setInterval(refreshStats, 10000);
+	*/
 </script>
