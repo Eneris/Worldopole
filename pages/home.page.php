@@ -23,6 +23,12 @@
 			<h3><font style="color:rgb(210,118,118)">UPDATE!</font> Unsere <a href="/PoGoChemnitz.v1.0.2.apk">Android App</a><br><small style="color:rgb(210,118,118)">Hinweis: Wir haben die App aktualisiert und der Link zur Karte funktioniert nun wieder. Einfach über den obenstehenden Link herunterladen und als Update installieren.</small></h3>
 			<br>
 			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a></h4>
+			<!-- Responsive Ad -->
+			<ins class="adsbygoogle"
+				style="display:block"
+				data-ad-client="ca-pub-5312537636379418"
+				data-ad-slot="1569833480"
+				data-ad-format="auto"></ins>
 		</div>
 	</div>
 </header>
