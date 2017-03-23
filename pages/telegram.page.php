@@ -5,6 +5,10 @@
                                 <strong>Telegram</strong> Benachrichtigungen<br><small>Seltene Pokémon, wechselnde Arenen sowie aktive Lockmodule direkt auf's Handy</small>
                         </h1>
 
+                        <br>
+
+                        <h4>Wenn du weitere Channels möchtest oder Anregungen für Änderungen der schon angeboteten hast, dann schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a></h4>
+
                 </div>
         </div>
 </header>

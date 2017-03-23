@@ -7,22 +7,22 @@
 				<small><?= sprintf($locales->SITE_CLAIM, $config->infos->city); ?></small>
 			</h1>
 			<br>
+			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a></h4>
+			<br>
 			<!--
 			<h2 style="line-height:1em"><small>Oh nein. Es suchen aktuell nur <strong id="accounts_working" style="color:rgb(62, 150, 62)">0</strong> Accounts nach Pokémon. :(<br>
 			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
 			Hilf uns dabei, mehr Pokémon zu finden und <a href="/captcha">löse Captchas</a>.</small></h2>
 			-->
-			<h2 style="line-height:.8em"><small style="font-size:.65em">Da der Betrieb diese Seite leider auch finanzielle Belastungen erzeugt (Serverkosten, Domain, API-Zugriff, Wartung, etc.), würden wir uns über deine Unterstützung durch eine kleine Spende freuen.</small></h2>
+			<h3><!--<font style="color:rgb(210,118,118)">UPDATE!</font> -->Probiere auch unsere <a href="/PoGoChemnitz.v1.0.2.apk">Android App</a><!--<br><small style="color:rgb(210,118,118)">Hinweis: Wir haben die App aktualisiert und der Link zur Karte funktioniert nun wieder. Einfach über den obenstehenden Link herunterladen und als Update installieren.</small>--></h3>
+			<br>
+			<h3 style="line-height:.8em"><small style="font-size:.65em">Da der Betrieb diese Seite leider auch finanzielle Belastungen erzeugt (Serverkosten, Domain, API-Zugriff, Wartung, etc.), würden wir uns über deine Unterstützung durch eine kleine Spende freuen.</small></h3>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 				<input type="hidden" name="cmd" value="_s-xclick">
 				<input type="hidden" name="hosted_button_id" value="AA8JKSAFM4D6Q">
 				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
 				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 			</form>
-			<br>
-			<h3><font style="color:rgb(210,118,118)">UPDATE!</font> Unsere <a href="/PoGoChemnitz.v1.0.2.apk">Android App</a><br><small style="color:rgb(210,118,118)">Hinweis: Wir haben die App aktualisiert und der Link zur Karte funktioniert nun wieder. Einfach über den obenstehenden Link herunterladen und als Update installieren.</small></h3>
-			<br>
-			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a></h4>
 			<!-- Responsive Ad -->
 			<ins class="adsbygoogle"
 				style="display:block"
