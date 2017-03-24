@@ -62,10 +62,17 @@
                 </a>
             </div>
 
-            <div class="col-md-12 col-sm-12 col-xs-12 big-data">
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data">
                 <a href="https://t.me/joinchat/AAAAAEGDicR1Rjm_mM2I8A" target="_blank">
                     <img src="/core/img/telegramicon.png" alt="Telegram Icognito Alarm Channel" width="50" class="big-icon">
                     <p><big><strong>PoGo Chemnitz Unown</strong></big><br>Nur Icognito</p>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12 big-data" style="border-left:1px lightgray solid;">
+                <a href="https://t.me/joinchat/AAAAAEIt6W8SHT_sokmYmg" target="_blank">
+                    <img src="/core/img/telegramicon.png" alt="Telegram Keepers Alarm Channel" width="50" class="big-icon">
+                    <p><big><strong>PoGo Chemnitz Keepers</strong></big><br>Pokémon für Arenen und Kämpfe</p>
                 </a>
             </div>
 
@@ -240,5 +247,41 @@
 
         <h3><a href="https://t.me/joinchat/AAAAAEGDicR1Rjm_mM2I8A">PoGo Chemnitz Unown</a></h3>
         <p>Im Icognito Channel werden dir ausschließlich Icognito (Unown) Pokémon angezeigt.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
+
+        <br>
+
+        <h3><a href="https://t.me/joinchat/AAAAAEIt6W8SHT_sokmYmg">PoGo Chemnitz Keepers</a></h3>
+        <p>Der Keepers Channel ist auf eine Auswahl von Pokémon beschränkt, welche sich gut für Arenen oder Kämpfe eignen.<br>Dir werden sowohl IV-Wert, das Moveset, sowie natürlich genauer Spawnpoint und Verweildauer angezeigt.</p>
+        <h3>Aktuell sind folgende Pokémon auf dieser Liste:</h3>
+        <div>
+            <img src="core/pokemons/68_go.png" width=60>
+            <img src="core/pokemons/76_go.png" width=60>
+            <img src="core/pokemons/103_go.png" width=60>
+            <img src="core/pokemons/112_go.png" width=60>
+            <img src="core/pokemons/113_go.png" width=60>
+            <img src="core/pokemons/130_go.png" width=60>
+            <img src="core/pokemons/131_go.png" width=60>
+            <img src="core/pokemons/134_go.png" width=60>
+            <img src="core/pokemons/135_go.png" width=60>
+            <img src="core/pokemons/136_go.png" width=60>
+            <img src="core/pokemons/143_go.png" width=60>
+            <img src="core/pokemons/147_go.png" width=60>
+            <img src="core/pokemons/148_go.png" width=60>
+            <img src="core/pokemons/149_go.png" width=60>
+            <img src="core/pokemons/154_go.png" width=60>
+            <img src="core/pokemons/157_go.png" width=60>
+            <img src="core/pokemons/160_go.png" width=60>
+            <img src="core/pokemons/179_go.png" width=60>
+            <img src="core/pokemons/180_go.png" width=60>
+            <img src="core/pokemons/181_go.png" width=60>
+            <img src="core/pokemons/196_go.png" width=60>
+            <img src="core/pokemons/197_go.png" width=60>
+            <img src="core/pokemons/201_go.png" width=60>
+            <img src="core/pokemons/212_go.png" width=60>
+            <img src="core/pokemons/230_go.png" width=60>
+            <img src="core/pokemons/246_go.png" width=60>
+            <img src="core/pokemons/247_go.png" width=60>
+            <img src="core/pokemons/248_go.png" width=60>
+        </div>
 
 </div>
