@@ -9,13 +9,6 @@ include_once('core/process/data.loader.php');
 <!DOCTYPE html>
 <html>
 	<head>
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({
-				google_ad_client: "ca-pub-5312537636379418",
-				enable_page_level_ads: true
-			});
-		</script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,11 +21,12 @@ include_once('core/process/data.loader.php');
 		<link href="core/css/font-awesome.min.css?20170206" rel="stylesheet">
 		<link href="<?php auto_ver('core/css/style.css'); ?>" rel="stylesheet">
 		<?php if ($page == "pokemon") { ?>
-			<link href="<?php auto_ver('core/css/jQRangeSlider-bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php auto_ver('core/css/jQRangeSlider-bootstrap.min.css'); ?>" rel="stylesheet">
 		<?php } ?>
 	</head>
 	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-5312537636379418", enable_page_level_ads: true });</script>
 		<?php
 		// Google Analytics
 		if (is_file("analyticstracking.php")) {
