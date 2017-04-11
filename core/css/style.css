@@ -453,21 +453,19 @@ trainers details styles
 	display: none;
 }
 
-@media (min-width: 768px) {
-	.col-md-1.pokemon-single {
-	    min-height: 292px;
-	}
+.col-md-1.pokemon-single {
+    min-height: 170px;
 }
 
-@media (min-width: 992px) {
+@media (max-width: 992px) {
 	.col-md-1.pokemon-single {
 	    min-height: 175px;
 	}
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 768px) {
 	.col-md-1.pokemon-single {
-	    min-height: 170px;
+	    min-height: 292px;
 	}
 }
 
