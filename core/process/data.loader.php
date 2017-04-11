@@ -459,12 +459,12 @@ else {
 			}
 		}
 		// get all mythic pokemon
-		$req 		= "SELECT DISTINCT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) as disappear_time_real, latitude, longitude, individual_attack, individual_defense, individual_stamina FROM pokemon
+		$req 		= "SELECT DISTINCT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) as disappear_time_real, latitude, longitude, individual_attack, individual_defense, individual_stamina, move_1, move_2 FROM pokemon
 				   WHERE pokemon_id IN (".implode(",", $mythic_pokemons).")
 				   ORDER BY last_modified DESC LIMIT 0,12";
 	} else {
 		// get all pokemon
-		$req		= "SELECT DISTINCT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) as disappear_time_real, latitude, longitude, individual_attack, individual_defense, individual_stamina FROM pokemon
+		$req		= "SELECT DISTINCT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) as disappear_time_real, latitude, longitude, individual_attack, individual_defense, individual_stamina, move_1, move_2 FROM pokemon
 				   ORDER BY last_modified DESC LIMIT 0,12";
 	}
 	$result 	= $mysqli->query($req);
@@ -492,6 +492,9 @@ else {
 					$recent->iv->available = false;
 				}
 			}
+
+			$recent->move1 = $data->move_1;
+			$recent->move2 = $data->move_2;
 
 			$recents[] = $recent;
 		}
