@@ -90,8 +90,8 @@
 		foreach ($recents as $key => $pokemon) {
 			$id = $pokemon->id;
 			$uid = $pokemon->uid;
-			$move1 =$pokemon->$move1;
-			$move2 = $pokemon->$move1;
+			$move1 =$pokemon->move1;
+			$move2 = $pokemon->move2;
 			$iv = number_format((100/45)*($pokemon->iv->attack+$pokemon->iv->defense+$pokemon->iv->stamina),2); ?>
 			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>" title="<?= $iv ?>% - <?= $move->$move1->name; ?> / <?= $move->$move2->name; ?>" >
 				<a href="pokemon/<?= $id ?>"><img src="core/pokemons/<?= $id.$config->system->pokeimg_suffix ?>" alt="<?= $pokemons->pokemon->$id->name ?>" class="img-responsive"></a>
