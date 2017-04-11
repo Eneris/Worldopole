@@ -453,6 +453,23 @@ trainers details styles
 	display: none;
 }
 
+@media (min-width: 1200px) {
+	.col-md-1.pokemon-single {
+	    min-height: 170px;
+	}
+}
+
+@media (min-width: 992px) {
+	.col-md-1.pokemon-single {
+	    min-height: 175px;
+	}
+}
+
+@media (min-width: 768px) {
+	.col-xs-4.pokemon-single {
+	    min-height: 292px;
+	}
+}
 
 /****************
 trainers search styles

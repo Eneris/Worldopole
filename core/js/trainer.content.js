@@ -273,8 +273,8 @@ function printPokemon(pokemon,pokeimg_suffix,iv_numbers,locale){
 	if (pokemon.gym_name) {
 		trainerPokemon.append($('<br>'));
 		var gym_name = pokemon.gym_name;
-		if (gym_name.length > 19) gym_name = gym_name.substr(0,19) + '…';
-		trainerPokemon.append($('<small>',{text: gym_name}).css('word-break', 'break-all'));
+		if (gym_name.length > 17) gym_name = gym_name.substr(0,17) + '…';
+		trainerPokemon.append($('<small>',{text: gym_name}).css({'word-break': 'break-all', 'color': '#777', 'font-style': 'italic'}));
 	}
 	return trainerPokemon;
 }
