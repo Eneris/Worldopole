@@ -466,7 +466,7 @@ trainers details styles
 }
 
 @media (min-width: 768px) {
-	.col-xs-4.pokemon-single {
+	.col-md-1.pokemon-single {
 	    min-height: 292px;
 	}
 }
