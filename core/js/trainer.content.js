@@ -270,7 +270,7 @@ function printPokemon(pokemon,pokeimg_suffix,iv_numbers,locale){
 		trainerPokemon.append($('<small>',{text: pokemon.last_scanned + " " + locale.days}));
 	}
 
-	var gym_name = pokemon.gym_name || '&nbsp;';
+	var gym_name = pokemon.gym_name || ' ';
 	if (gym_name.length > 17) gym_name = gym_name.substr(0,17) + '…';
 
 	trainerPokemon.append($('<br>'));
