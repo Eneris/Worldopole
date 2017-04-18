@@ -113,6 +113,8 @@ function getInfo(data) {
 	var info = 	'<div id="content">' +
 			'<div id="bodyContent">' +
 			'<p><b>' + pokemon[data.pokemon_id] + '</b>: ' + data.total_pokemon + ' <?= $locales->NESTS_PER_DAY ?> </p>' +
+			'<p>Possible spawntime from *:' + data.starttime + ' to *:' + data.endtime + '<br>' +
+			'Chance to find: ' + Math.round(data.total_pokemon/0.24, 2) + '%</p>' +
 			'</div>' +
 			'</div>'
 	return info
