@@ -1,6 +1,6 @@
 <?php
 	# Send Javascript header
-	header("Cache-Control: max-age=900");
+	header("Cache-Control: max-age=21600");
 	header('Content-type: text/javascript');
 
 	# Load variables and locales
@@ -67,7 +67,7 @@ function initMap() {
 			
 			for (var i = 0; i < nestData.length; i++) {
 				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(nestData[i].latitude, nestData[i].longitude),
+					position: new google.maps.LatLng(nestData[i].lat, nestData[i].lng),
 					map: map,
 					icon: getImage(nestData[i], pokeimg_suffix)
 				});
@@ -100,7 +100,7 @@ function initMap() {
 
 function getImage(data, pokeimg_suffix) {
 	var image = {
-		url: 'core/pokemons/' + data.pokemon_id + pokeimg_suffix,
+		url: 'core/pokemons/' + data.pid + pokeimg_suffix,
 		scaledSize: new google.maps.Size(32, 32),
 		origin: new google.maps.Point(0,0),
 		anchor: new google.maps.Point(16, 16),
@@ -113,9 +113,9 @@ function getImage(data, pokeimg_suffix) {
 function getInfo(data) {
 	var info = 	'<div id="content">' +
 			'<div id="bodyContent">' +
-			'<p><b>' + pokemon[data.pokemon_id] + '</b>: ' + data.total_pokemon + ' <?= $locales->NESTS_PER_DAY ?> </p>' +
-			'<p>Possible spawntime from *:' + data.starttime + ' to *:' + data.endtime + '<br>' +
-			'Chance to find: ' + Math.round(data.total_pokemon/0.24, 2) + '%</p>' +
+			'<p><b>' + pokemon[data.pid] + '</b>: ' + data.c + ' <?= $locales->NESTS_PER_DAY ?> </p>' +
+			'<p>Possible spawntime from *:' + data.st + ' to *:' + data.et + '<br>' +
+			'Chance to find: ' + Math.round(data.c/0.24, 2) + '%</p>' +
 			'</div>' +
 			'</div>'
 	return info
