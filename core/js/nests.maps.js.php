@@ -130,7 +130,7 @@ Date.prototype.addDays = function(days) {
 
 $(function () {
 	var migration = new Date('2017-05-04T00:00:00Z');
-	if (migration < new Date()) migration = migration.addDays(14);
+	while (migration < new Date()) migration = migration.addDays(14);
 	$('#migration').countdown(migration, function(event) {
 		$(this).html(event.strftime('%w <?= $locales->WEEKS ?> %d <?= $locales->DAYS ?> %H <?= $locales->HOURS ?> %M <?= $locales->MINUTES ?>'));
 	});
