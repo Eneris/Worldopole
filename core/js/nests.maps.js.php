@@ -120,3 +120,18 @@ function getInfo(data) {
 			'</div>'
 	return info
 }
+
+
+Date.prototype.addDays = function(days) {
+	var d = new Date(this.valueOf());
+	d.setDate(d.getDate() + days);
+	return d;
+}
+
+$(function () {
+	var migration = new Date('2017-05-04T00:00:00Z');
+	if (migration < new Date()) migration = migration.addDays(14);
+	$('#migration').countdown(migration, function(event) {
+		$(this).html(event.strftime('%w <?= $locales->WEEKS ?> %d <?= $locales->DAYS ?> %H <?= $locales->HOURS ?> %M <?= $locales->MINUTES ?>'));
+	});
+});
