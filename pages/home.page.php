@@ -90,10 +90,14 @@
 		foreach ($recents as $key => $pokemon) {
 			$id = $pokemon->id;
 			$uid = $pokemon->uid;
-			$move1 =$pokemon->move1;
-			$move2 = $pokemon->move2;
-			$iv = number_format((100/45)*($pokemon->iv->attack+$pokemon->iv->defense+$pokemon->iv->stamina),2); ?>
-			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>" title="<?= $iv ?>% - <?= $move->$move1->name; ?> / <?= $move->$move2->name; ?>" >
+			if ($pokemon->iv->available) {
+				$move1 =$pokemon->move1;
+				$move2 = $pokemon->move2;
+				$iv = number_format((100/45)*($pokemon->iv->attack+$pokemon->iv->defense+$pokemon->iv->stamina),2); ?>
+			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>" title="<?= $iv ?>% - <?= $move->$move1->name; ?> / <?= $move->$move2->name; ?>">
+		<?php } else { ?>
+			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>">
+		<?php } ?>
 				<a href="pokemon/<?= $id ?>"><img src="core/pokemons/<?= $id.$config->system->pokeimg_suffix ?>" alt="<?= $pokemons->pokemon->$id->name ?>" class="img-responsive"></a>
 				<a href="pokemon/<?= $id ?>"><p class="pkmn-name"><?= $pokemons->pokemon->$id->name ?></p></a>
 				<a href="https://maps.google.com/?q=<?= $pokemon->last_location->latitude ?>,<?= $pokemon->last_location->longitude ?>&ll=<?= $pokemon->last_location->latitude ?>,<?= $pokemon->last_location->longitude ?>&z=16" target="_blank">
