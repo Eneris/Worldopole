@@ -61,7 +61,7 @@
 				<th><?= $locales->TRAINERS_TABLE_LEVEL ?></th>
 				<th><?= $locales->TRAINERS_TABLE_GYMS ?></th>
 				<th><?= $locales->TRAINERS_TABLE_LAST_SEEN ?></th>
-				<th><?= $locales->TRAINERS_TABLE_SHOW_UNSEEN ?></th>
+				<th><?= $locales->TRAINERS_TABLE_SHOW_ALL ?></th>
 			</tr>
 			</thead>
 			<tbody id="trainersContainer">
