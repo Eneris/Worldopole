@@ -226,7 +226,7 @@ if (!empty($page)) {
 					FROM gympokemon
 					WHERE pokemon_id = '".$pokemon_id."'
 					GROUP BY pokemon_uid
-					ORDER BY $best_order_by $best_direction, trainer_name ASC   # Secondary sort by name
+					ORDER BY $best_order_by $best_direction, cp ASC   # Secondary sort by cp
 					LIMIT 0,25";
 			
 			$result = $mysqli->query($req);
