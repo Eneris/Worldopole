@@ -150,6 +150,10 @@ img.unseen{
 	opacity:0.5;
 }
 
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px 6px;
+}
+
 .pokemon-single a:hover img	 {
 	background-image: url('../img/blue-hover.png');
 	background-size: 100% 100%;
