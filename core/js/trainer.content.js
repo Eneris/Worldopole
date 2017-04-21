@@ -143,32 +143,32 @@ function printTrainer(trainer, trainerIndex,pokeimg_suffix,iv_numbers, locale) {
 	trainersInfos.append($('<td>',{id : 'trainerLevel_'+trainer.name, text : trainer.level}));
 	trainersInfos.append($('<td>',{id : 'trainerGyms_'+trainer.name, text : trainer.gyms}));
 	trainersInfos.append($('<td>',{id : 'trainerLastSeen_'+trainer.name, text : trainer.last_seen}));
+	trainersInfos.append($('<td>',{id : 'trainerShowAll_'+trainer.name}).append('<input type="checkbox" id="showAll">'));
 	$('#trainersContainer').append(trainersInfos);
 	var trainersPokemonsRow = $('<tr>',{id: 'trainerPokemons_'+trainer.name});
-	var trainersPokemons = $('<td>',{colspan : 6});
+	var trainersPokemons = $('<td>',{colspan : 7});
 	var trainersPokemonsContainer = $('<div>',{class : ""});
 	for (var pokeIndex = 0; pokeIndex<trainer.pokemons.length; pokeIndex++) {
 		var pokemon = trainer.pokemons[pokeIndex];
 		trainersPokemonsContainer.append(printPokemon(pokemon,pokeimg_suffix,iv_numbers, locale));
 	}
-
+	trainersInfos.find('#showAll').click(function() {
+		trainersPokemonsContainer.find('div.pokemon-single.unseen').fadeToggle();
+	});
 	trainersPokemons.append(trainersPokemonsContainer);
 	trainersPokemonsRow.append(trainersPokemons);
 	$('#trainersContainer').append(trainersPokemonsRow);
 }
 
 function printPokemon(pokemon,pokeimg_suffix,iv_numbers,locale){
-	var trainerPokemon = $('<div>',{id : 'trainerPokemon_'+pokemon.pokemon_uid, class: "col-md-1 col-xs-4 pokemon-single", style: "text-align: center" });
-	var gymClass = "";
-	if ((pokemon.gym_id===null)) {
-		gymClass = "unseen";
-	}
+	var gymClass = pokemon.gym_id === null ? ' unseen' : '';
+	var trainerPokemon = $('<div>',{id : 'trainerPokemon_'+pokemon.pokemon_uid, class: 'col-md-1 col-xs-4 pokemon-single'+gymClass, style: 'text-align: center' });
+	if (gymClass) trainerPokemon.hide();
 	trainerPokemon.append(
-		$('<a>',
-			{href : 'pokemon/'+pokemon.pokemon_id}
-		).append($('<img />',
-			{	src : 'core/pokemons/'+pokemon.pokemon_id+pokeimg_suffix,
-				'class' : 'img-responsive '+gymClass
+		$('<a>', { href : 'pokemon/'+pokemon.pokemon_id }).append(
+			$('<img />', {
+				src : 'core/pokemons/'+pokemon.pokemon_id+pokeimg_suffix,
+				class : 'img-responsive'+gymClass
 			})
 		)
 	);
@@ -177,70 +177,64 @@ function printPokemon(pokemon,pokeimg_suffix,iv_numbers,locale){
 	if (iv_numbers) {
 		progressBar = $('<div>',{class : 'progress'}).css({'height': '15px','margin-bottom': '0'});
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivAttack+' :'+pokemon.iv_attack,
-						class: 'progress-bar progress-bar-danger' ,
-						role : 'progressbar',
-						text : pokemon.iv_attack,
-						'aria-valuenow' : pokemon.iv_attack,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css({'width':(100/3) + '%','line-height': '16px'}))
+			$('<div>', {
+				title: locale.ivAttack+' :'+pokemon.iv_attack,
+				class: 'progress-bar progress-bar-danger' ,
+				role : 'progressbar',
+				text : pokemon.iv_attack,
+				'aria-valuenow' : pokemon.iv_attack,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css({'width':(100/3) + '%','line-height': '16px'}))
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivDefense+' :'+pokemon.iv_defense,
-						class: 'progress-bar progress-bar-info' ,
-						role : 'progressbar',
-						text : pokemon.iv_defense,
-						'aria-valuenow': pokemon.iv_defense,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css({'width':(100/3) + '%','line-height': '16px'}))
+			$('<div>', {
+				title: locale.ivDefense+' :'+pokemon.iv_defense,
+				class: 'progress-bar progress-bar-info' ,
+				role : 'progressbar',
+				text : pokemon.iv_defense,
+				'aria-valuenow': pokemon.iv_defense,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css({'width':(100/3) + '%','line-height': '16px'}))
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivStamina+' :'+pokemon.iv_stamina,
-						class: 'progress-bar progress-bar-success' ,
-						role : 'progressbar',
-						text : pokemon.iv_stamina,
-						'aria-valuenow' :pokemon.iv_stamina,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css({'width':(100/3) + '%','line-height': '16px'}))
+			$('<div>', {
+				title: locale.ivStamina+' :'+pokemon.iv_stamina,
+				class: 'progress-bar progress-bar-success' ,
+				role : 'progressbar',
+				text : pokemon.iv_stamina,
+				'aria-valuenow' :pokemon.iv_stamina,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css({'width':(100/3) + '%','line-height': '16px'}))
 	} else {
 		progressBar = $('<div>',{class : 'progress'}).css({'height': '6px','margin-bottom': '0'});
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivAttack+' :'+pokemon.iv_attack,
-						class: 'progress-bar progress-bar-danger' ,
-						role : 'progressbar',
-						'aria-valuenow' : pokemon.iv_attack,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css('width',((100/45)*pokemon.iv_attack ) + '%'))
+			$('<div>', {
+				title: locale.ivAttack+' :'+pokemon.iv_attack,
+				class: 'progress-bar progress-bar-danger' ,
+				role : 'progressbar',
+				'aria-valuenow' : pokemon.iv_attack,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css('width',((100/45)*pokemon.iv_attack ) + '%'))
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivDefense+' :'+pokemon.iv_defense,
-						class: 'progress-bar progress-bar-info' ,
-						role : 'progressbar',
-						'aria-valuenow': pokemon.iv_defense,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css('width',((100/45)*pokemon.iv_defense ) + '%'))
+			$('<div>', {
+				title: locale.ivDefense+' :'+pokemon.iv_defense,
+				class: 'progress-bar progress-bar-info' ,
+				role : 'progressbar',
+				'aria-valuenow': pokemon.iv_defense,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css('width',((100/45)*pokemon.iv_defense ) + '%'))
 		progressBar.append(
-					$('<div>',
-					{
-						title: locale.ivStamina+' :'+pokemon.iv_stamina,
-						class: 'progress-bar progress-bar-success' ,
-						role : 'progressbar',
-						'aria-valuenow' :pokemon.iv_stamina,
-						'aria-valuemin' : 0,
-						'aria-valuemax' : 45
-					}).css('width',((100/45)*pokemon.iv_stamina ) + '%'))
+			$('<div>', {
+				title: locale.ivStamina+' :'+pokemon.iv_stamina,
+				class: 'progress-bar progress-bar-success' ,
+				role : 'progressbar',
+				'aria-valuenow' :pokemon.iv_stamina,
+				'aria-valuemin' : 0,
+				'aria-valuemax' : 45
+			}).css('width',((100/45)*pokemon.iv_stamina ) + '%'))
 	}
 	trainerPokemon.append(progressBar);
 	
@@ -274,7 +268,7 @@ function printPokemon(pokemon,pokeimg_suffix,iv_numbers,locale){
 	if (gym_name.length > 17) gym_name = gym_name.substr(0,17) + '…';
 
 	trainerPokemon.append($('<br>'));
-	trainerPokemon.append($('<small>',{text: gym_name}).css({'word-break': 'break-all', 'color': '#777', 'font-style': 'italic'}));
+	trainerPokemon.append($('<small>',{text: gym_name}).css({ 'word-break': 'break-all', 'color': '#777', 'font-style': 'italic' }));
 
 	return trainerPokemon;
 }

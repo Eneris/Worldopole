@@ -131,6 +131,7 @@
 "TRAINERS_TABLE_LEVEL" : "Level",
 "TRAINERS_TABLE_GYMS" : "Gyms",
 "TRAINERS_TABLE_LAST_SEEN" : "Last Seen",
+"TRAINERS_TABLE_SHOW_ALL" : "Show All",
 "UNSEEN": "unseen",
 "MYTHIC": "Mythic",
 "RARE": "Rare",
