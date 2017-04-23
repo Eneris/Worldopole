@@ -9,6 +9,8 @@
 			<!--<br>
 			<h4 style="color:rgb(210,118,118)">HINWEIS: Aktuell laufen Wartungsarbeiten, so dass für einige Stunden keine vollständige Abdeckung gewährleistet werden kann.</h4>-->
 			<br>
+			<h4 style="color:rgb(210,118,118)">HINWEIS: Aufgrund aktueller Änderungen der Spielmechanik (zufällige IV-Werte / Movesets je nach Spielerlevel) werden diese Werte bis auf weiteres nicht mehr ausgelesen und angezeigt.</h4>
+			<br>
 			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a><br>oder komme in unsere neue <a href="https://t.me/joinchat/AAAAAEJgykPimJ0T20yqnA" target="_blank">PoGo Chemnitz Talk</a> Telegram Gruppe</h4>
 			<br>
 			<!--
@@ -16,9 +18,9 @@
 			Für alle anderen müssen aktuell <strong id="accounts_captcha" style="color:rgb(210,118,118)">0</strong> Captchas gelöst werden.<br>
 			Hilf uns dabei, mehr Pokémon zu finden und <a href="/captcha">löse Captchas</a>.</small></h2>
 			-->
-			<h2 style="line-height:.7em"><small><font style="color:rgb(210,118,118)">NEU!</font> Es wird nun auch der westliche Teil von Chemnitz (Siegmar, Reichenbrand, Rabenstein) sowie der Nordosten (Ebersdorf, Lichtenwalde) mit abgedeckt.</small></h2>
-			<br>
-			<h3><!--<font style="color:rgb(210,118,118)">UPDATE!</font> -->Probiere auch unsere <a href="/PoGoChemnitz.v1.0.2.apk">Android App</a><!--<br><small style="color:rgb(210,118,118)">Hinweis: Wir haben die App aktualisiert und der Link zur Karte funktioniert nun wieder. Einfach über den obenstehenden Link herunterladen und als Update installieren.</small>--></h3>
+			<!--<h2 style="line-height:.7em"><small><font style="color:rgb(210,118,118)">NEU!</font> Es wird nun auch der westliche Teil von Chemnitz (Siegmar, Reichenbrand, Rabenstein) sowie der Nordosten (Ebersdorf, Lichtenwalde) mit abgedeckt.</small></h2>
+			<br>-->
+			<h3><font style="color:rgb(210,118,118)">MINI UPDATE</font> Probiere auch unsere <a href="/PoGoChemnitz.v1.0.3.apk">Android App</a><!--<br><small style="color:rgb(210,118,118)">Hinweis: Wir haben die App aktualisiert und der Link zur Karte funktioniert nun wieder. Einfach über den obenstehenden Link herunterladen und als Update installieren.</small>--></h3>
 			<br>
 			<h3 style="line-height:.8em"><small style="font-size:.65em">Da der Betrieb diese Seite leider auch finanzielle Belastungen erzeugt (Serverkosten, Domain, API-Zugriff, Wartung, etc.), würden wir uns über deine Unterstützung durch eine kleine Spende freuen.</small></h3>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
