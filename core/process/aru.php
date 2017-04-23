@@ -709,34 +709,13 @@ switch ($request) {
 
 		break;
 
-	case 'pokedex':
-		$json="";
-		if (isset($_GET['pokemon_id'])) {
-			$pokemon_id = mysqli_real_escape_string($mysqli, $_GET['pokemon_id']);
-			$where = " WHERE pokemon.pokemon_id = ".$pokemon_id;
-			$req 		= "SELECT COUNT(encounter_id) as total FROM pokemon".$where;
-			$result 	= $mysqli->query($req);
-			$total = 0;
-			while ($result && $data = $result->fetch_object()) {
-				$total 	= $data;
-			}
-
-			$json = json_encode($total);
-		}
-
-		header('Content-Type: application/json');
-
-		echo $json;
-
-		break;
-
 	case 'pokemon_graph_data':
 		$json="";
 		if (isset($_GET['pokemon_id'])) {
 			$pokemon_id = mysqli_real_escape_string($mysqli, $_GET['pokemon_id']);
 			$req 		= "SELECT COUNT(*) as total, "
 					. "HOUR(CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) as disappear_hour
-			FROM (SELECT disappear_time FROM pokemon WHERE pokemon_id = '".$pokemon_id."' LIMIT 10000) as pokemonFiltered
+			FROM (SELECT disappear_time FROM pokemon WHERE pokemon_id = '".$pokemon_id."' ORDER BY disappear_time LIMIT 10000) as pokemonFiltered
 			GROUP BY disappear_hour
 			ORDER BY disappear_hour";
 			$result 	= $mysqli->query($req);

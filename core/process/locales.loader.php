@@ -19,7 +19,8 @@
  *
  * @return array Sorted list of "accept" options
  */
-$sortAccept = function ($header) {
+$sortAccept = function ($header)
+{
 	$matches = array();
 	foreach (explode(',', $header) as $option) {
 		$option = array_map('trim', explode(';', $option));
@@ -52,7 +53,8 @@ $sortAccept = function ($header) {
  *
  * @return string|NULL a matched option, or NULL if no match
  */
-$matchAccept = function ($header, $supported) use ($sortAccept) {
+$matchAccept = function ($header, $supported) use ($sortAccept)
+{
 	$matches = $sortAccept($header);
 	foreach ($matches as $key => $q) {
 		if (isset($supported[$key])) {
@@ -83,7 +85,8 @@ $matchAccept = function ($header, $supported) use ($sortAccept) {
  *
  * @return string The negotiated language result or the supplied default.
  */
-$negotiateLanguage = function ($supported, $default = 'en-US') use ($matchAccept) {
+$negotiateLanguage = function ($supported, $default = 'en-US') use ($matchAccept)
+{
 	$supp = array();
 	foreach ($supported as $lang => $isSupported) {
 		if ($isSupported) {
@@ -168,6 +171,9 @@ $pokemons 		= json_decode($pokedex_file);
 $pokedex_rarity_file = SYS_PATH.'/core/json/pokedex.rarity.json';
 $pokemons_rarity = json_decode(file_get_contents($pokedex_rarity_file));
 
+$pokedex_counts_file = SYS_PATH.'/core/json/pokedex.counts.json';
+$pokemon_counts = json_decode(file_get_contents($pokedex_counts_file));
+
 foreach ($pokemons->pokemon as $pokeid => $pokemon) {
 	// Merge name and description from translation files
 	$pokemon->name 			= $pokemon_trans->pokemon->$pokeid->name;
@@ -200,9 +206,14 @@ foreach ($pokemons->pokemon as $pokeid => $pokemon) {
 		}
 	}
 	
+	// Add pokemon counts to array
+	$pokemon->spawn_count = $pokemon_counts->$pokeid;
+
 	// Calculate and add rarities to array
-	$spawn_rate = $pokemons_rarity->$pokeid;
+	$spawn_rate = $pokemons_rarity->$pokeid->rate;
 	$pokemon->spawn_rate = $spawn_rate;
+	$pokemon->per_day = $pokemons_rarity->$pokeid->per_day;
+
 	// >= 1          = Very common
 	// 0.20 - 1      = Common
 	// 0.01 - 0.20   = Rare
@@ -214,12 +225,16 @@ foreach ($pokemons->pokemon as $pokeid => $pokemon) {
 		$pokemon->rarity = $locales->COMMON;
 	} elseif ($spawn_rate >= 0.01) {
 		$pokemon->rarity = $locales->RARE;
-	} elseif ($spawn_rate > 0) {
+	} elseif ($spawn_rate > 0 || $pokemon->spawn_count > 0) {
+		// pokemon with at least 1 spawn in the past aren't unseen!
 		$pokemon->rarity = $locales->MYTHIC;
 	} else {
 		$pokemon->rarity = $locales->UNSEEN;
 	}
 }
+
+// Add total pokemon count
+$pokemons->total = $pokemon_counts->total;
 
 // Translate typecolors array keys as well
 $types_temp = new stdClass();
@@ -240,6 +255,7 @@ unset($locale_dir);
 unset($pokemon_file);
 unset($translation_file);
 unset($pokedex_file);
+unset($pokemon_counts);
 unset($moves_file);
 unset($pokemon_trans);
 unset($types_temp);
