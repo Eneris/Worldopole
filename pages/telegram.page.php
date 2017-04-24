@@ -94,55 +94,23 @@
             <img src="core/pokemons/3_go.png" width=60>
             <img src="core/pokemons/6_go.png" width=60>
             <img src="core/pokemons/9_go.png" width=60>
-            <img src="core/pokemons/24_go.png" width=60>
-            <img src="core/pokemons/26_go.png" width=60>
-            <img src="core/pokemons/28_go.png" width=60>
-            <img src="core/pokemons/31_go.png" width=60>
-            <img src="core/pokemons/34_go.png" width=60>
-            <img src="core/pokemons/36_go.png" width=60>
-            <img src="core/pokemons/38_go.png" width=60>
-            <img src="core/pokemons/45_go.png" width=60>
-            <img src="core/pokemons/51_go.png" width=60>
-            <img src="core/pokemons/57_go.png" width=60>
             <img src="core/pokemons/59_go.png" width=60>
-            <img src="core/pokemons/62_go.png" width=60>
-            <img src="core/pokemons/64_go.png" width=60>
             <img src="core/pokemons/65_go.png" width=60>
-            <img src="core/pokemons/67_go.png" width=60>
             <img src="core/pokemons/68_go.png" width=60>
-            <img src="core/pokemons/71_go.png" width=60>
-            <img src="core/pokemons/75_go.png" width=60>
             <img src="core/pokemons/76_go.png" width=60>
-            <img src="core/pokemons/78_go.png" width=60>
-            <img src="core/pokemons/80_go.png" width=60>
-            <img src="core/pokemons/82_go.png" width=60>
-            <img src="core/pokemons/83_go.png" width=60>
-            <img src="core/pokemons/85_go.png" width=60>
+            <img src="core/pokemons/73_go.png" width=60>
             <img src="core/pokemons/89_go.png" width=60>
-            <img src="core/pokemons/91_go.png" width=60>
-            <img src="core/pokemons/94_go.png" width=60>
-            <img src="core/pokemons/95_go.png" width=60>
-            <img src="core/pokemons/101_go.png" width=60>
             <img src="core/pokemons/103_go.png" width=60>
-            <img src="core/pokemons/105_go.png" width=60>
-            <img src="core/pokemons/106_go.png" width=60>
-            <img src="core/pokemons/107_go.png" width=60>
-            <img src="core/pokemons/110_go.png" width=60>
             <img src="core/pokemons/112_go.png" width=60>
             <img src="core/pokemons/113_go.png" width=60>
             <img src="core/pokemons/114_go.png" width=60>
             <img src="core/pokemons/115_go.png" width=60>
-            <img src="core/pokemons/121_go.png" width=60>
-            <img src="core/pokemons/123_go.png" width=60>
             <img src="core/pokemons/128_go.png" width=60>
             <img src="core/pokemons/130_go.png" width=60>
             <img src="core/pokemons/131_go.png" width=60>
             <img src="core/pokemons/134_go.png" width=60>
             <img src="core/pokemons/135_go.png" width=60>
             <img src="core/pokemons/136_go.png" width=60>
-            <img src="core/pokemons/137_go.png" width=60>
-            <img src="core/pokemons/139_go.png" width=60>
-            <img src="core/pokemons/141_go.png" width=60>
             <img src="core/pokemons/142_go.png" width=60>
             <img src="core/pokemons/143_go.png" width=60>
             <img src="core/pokemons/144_go.png" width=60>
@@ -153,16 +121,9 @@
             <img src="core/pokemons/149_go.png" width=60>
             <img src="core/pokemons/150_go.png" width=60>
             <img src="core/pokemons/151_go.png" width=60>
-            <img src="core/pokemons/152_go.png" width=60>
-            <img src="core/pokemons/153_go.png" width=60>
             <img src="core/pokemons/154_go.png" width=60>
-            <img src="core/pokemons/155_go.png" width=60>
-            <img src="core/pokemons/156_go.png" width=60>
             <img src="core/pokemons/157_go.png" width=60>
-            <img src="core/pokemons/158_go.png" width=60>
-            <img src="core/pokemons/159_go.png" width=60>
             <img src="core/pokemons/160_go.png" width=60>
-            <img src="core/pokemons/171_go.png" width=60>
             <img src="core/pokemons/172_go.png" width=60>
             <img src="core/pokemons/173_go.png" width=60>
             <img src="core/pokemons/174_go.png" width=60>
@@ -173,33 +134,20 @@
             <img src="core/pokemons/181_go.png" width=60>
             <img src="core/pokemons/182_go.png" width=60>
             <img src="core/pokemons/186_go.png" width=60>
-            <img src="core/pokemons/188_go.png" width=60>
-            <img src="core/pokemons/189_go.png" width=60>
             <img src="core/pokemons/192_go.png" width=60>
-            <img src="core/pokemons/195_go.png" width=60>
             <img src="core/pokemons/196_go.png" width=60>
             <img src="core/pokemons/197_go.png" width=60>
             <img src="core/pokemons/199_go.png" width=60>
             <img src="core/pokemons/201_go.png" width=60>
-            <img src="core/pokemons/203_go.png" width=60>
-            <img src="core/pokemons/204_go.png" width=60>
-            <img src="core/pokemons/205_go.png" width=60>
             <img src="core/pokemons/208_go.png" width=60>
-            <img src="core/pokemons/210_go.png" width=60>
-            <img src="core/pokemons/211_go.png" width=60>
             <img src="core/pokemons/212_go.png" width=60>
             <img src="core/pokemons/214_go.png" width=60>
-            <img src="core/pokemons/217_go.png" width=60>
-            <img src="core/pokemons/218_go.png" width=60>
             <img src="core/pokemons/219_go.png" width=60>
             <img src="core/pokemons/222_go.png" width=60>
             <img src="core/pokemons/225_go.png" width=60>
-            <img src="core/pokemons/229_go.png" width=60>
             <img src="core/pokemons/230_go.png" width=60>
-            <img src="core/pokemons/231_go.png" width=60>
             <img src="core/pokemons/232_go.png" width=60>
             <img src="core/pokemons/233_go.png" width=60>
-            <img src="core/pokemons/234_go.png" width=60>
             <img src="core/pokemons/235_go.png" width=60>
             <img src="core/pokemons/236_go.png" width=60>
             <img src="core/pokemons/237_go.png" width=60>
