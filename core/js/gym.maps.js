@@ -1,4 +1,7 @@
 /** global: google */
+/** global: navigator */
+/** global: InfoBox */
+
 function initMap()
 {
 	$('.gym_details').hide();
@@ -51,7 +54,36 @@ function initMap()
 					$.getJSON( 'core/json/defaultstyle.json', function( data ) {
 						map.set('styles', data);
 					});
-					
+
+		$.ajax({
+			'async': true,
+			'type': "GET",
+			'global': false,
+			'dataType': 'json',
+			'url': "core/process/aru.php",
+			'data': {
+				'request': "",
+				'target': 'arrange_url',
+				'method': 'method_target',
+				'type': 'maps_localization_coordinates'
+			}
+		}).done(function(coordinates) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+
+					if (position.coords.latitude <= coordinates.max_latitude && position.coords.latitude >= coordinates.min_latitude) {
+						if (position.coords.longitude <= coordinates.max_longitude && position.coords.longitude >= coordinates.min_longitude) {
+							map.setCenter(pos);
+						}
+					}
+				});
+			}
+		});
+
 					var infowindow = new InfoBox({
 						content: document.getElementById("gym_details_template"),
 						disableAutoPan: false,
@@ -69,16 +101,14 @@ function initMap()
 			
 					for (i = 0; i < gyms.length; i++) {
 						marker = new google.maps.Marker({
-							position: new google.maps.LatLng(gyms[i][2], gyms[i][3]),
+							position: new google.maps.LatLng(gyms[i][1], gyms[i][2]),
 							map: map,
-							icon: 'core/img/'+gyms[i][1],
+							icon: 'core/img/'+gyms[i][0],
 						});
 					
 					
 						google.maps.event.addListener(marker, 'click', (function (marker, i) {
 							return function () {
-								infowindow.setContent(gyms[i][0]);
-								infowindow.open(map, marker);
 								$.ajax({
 									'async': true,
 									'type': "GET",
@@ -90,11 +120,12 @@ function initMap()
 										'target': 'arrange_url',
 										'method': 'method_target',
 										'type' : 'gym_defenders',
-										'gym_id' : gyms[i][4]
+										'gym_id' : gyms[i][3]
 									},
 									'success': function (data) {
 										setGymDetails(data);
 										infowindow.setContent($('#gym_details_template').html());
+										infowindow.open(map, marker);
 									}
 								});
 							}

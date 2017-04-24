@@ -1,6 +1,7 @@
 /** global: google */
 /** global: pokemon_id */
 /** global: navigator */
+
 var map, heatmap;
 var pokemonMarkers = [];
 var updateLiveTimeout;
@@ -46,9 +47,39 @@ function initMap() {
 		$.getJSON( 'core/json/defaultstyle.json', function( data ) {
 			map.set('styles', data);
 		});
+
+		$.ajax({
+			'async': true,
+			'type': "GET",
+			'global': false,
+			'dataType': 'json',
+			'url': "core/process/aru.php",
+			'data': {
+				'request': "",
+				'target': 'arrange_url',
+				'method': 'method_target',
+				'type': 'maps_localization_coordinates'
+			}
+		}).done(function(coordinates) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+
+					if (position.coords.latitude <= coordinates.max_latitude && position.coords.latitude >= coordinates.min_latitude) {
+						if (position.coords.longitude <= coordinates.max_longitude && position.coords.longitude >= coordinates.min_longitude) {
+							map.setCenter(pos);
+						}
+					}
+				});
+			}
+		});
 		
 		initHeatmap();
 		initSelector(pokeimg_suffix);
+		
 	});
 }
 
@@ -294,7 +325,7 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 	};
 	var encounter = false;
 	var ivPercent = 100;
-	if (pokemon.individual_attack != null) {
+	if (pokemon.individual_attack !== null) {
 		encounter = true;
 		ivPercent = ((100/45)*(parseInt(pokemon.individual_attack)+parseInt(pokemon.individual_defense)+parseInt(pokemon.individual_stamina))).toFixed(2);
 	}
@@ -419,11 +450,11 @@ function extractEncountersId(){
 }
 
 function isTouchDevice() {
-    // Should cover most browsers
-    return 'ontouchstart' in window || navigator.maxTouchPoints
+	// Should cover most browsers
+	return 'ontouchstart' in window || navigator.maxTouchPoints
 }
 
 function isMobileDevice() {
-    //  Basic mobile OS (not browser) detection
-    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+	// Basic mobile OS (not browser) detection
+	return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
 }
