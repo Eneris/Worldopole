@@ -155,7 +155,7 @@ switch ($request) {
 
 			// get last mythic pokemon
 			$req = "SELECT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) AS disappear_time_real,
-					latitude, longitude, individual_attack, individual_defense, individual_stamina, move_1, move_2
+					latitude, longitude, cp, individual_attack, individual_defense, individual_stamina, move_1, move_2
 					FROM pokemon
 					WHERE pokemon_id IN (".implode(",", $mythic_pokemons).")
 					ORDER BY last_modified DESC
@@ -163,7 +163,7 @@ switch ($request) {
 		} else {
 			// get last pokemon
 			$req = "SELECT pokemon_id, encounter_id, disappear_time, last_modified, (CONVERT_TZ(disappear_time, '+00:00', '".$time_offset."')) AS disappear_time_real,
-					latitude, longitude, individual_attack, individual_defense, individual_stamina, move_1, move_2
+					latitude, longitude, cp, individual_attack, individual_defense, individual_stamina, move_1, move_2
 					FROM pokemon
 					ORDER BY last_modified DESC
 					LIMIT 0,12";
@@ -183,6 +183,7 @@ switch ($request) {
 
 				if ($config->system->recents_show_iv) {
 					$iv = new stdClass();
+					$iv->cp = $data->cp;
 					$iv->attack = $data->individual_attack;
 					$iv->defense = $data->individual_defense;
 					$iv->stamina = $data->individual_stamina;
@@ -205,19 +206,19 @@ switch ($request) {
 						if ($config->system->iv_numbers) {
 							$html .= '
 							<div class="progress" style="height: 15px; margin-bottom: 0">
-								<div title="'.$locales->IV_ATTACK.': '.$iv->attack.'" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$iv->attack.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
+								<div title="'.$locales->IV_ATTACK.': '.$iv->attack.'" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$iv->attack.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
 									<span class="sr-only">'.$locales->IV_ATTACK.': '.$iv->attack.'</span>'.$iv->attack .'
 								</div>
-								<div title="'.$locales->IV_DEFENSE.': '.$iv->defense.'" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$iv->defense.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
+								<div title="'.$locales->IV_DEFENSE.': '.$iv->defense.'" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$iv->defense.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
 									<span class="sr-only">'.$locales->IV_DEFENSE.': '.$iv->defense.'</span>'.$iv->defense .'
 								</div>
-								<div title="'.$locales->IV_STAMINA.': '.$iv->stamina.'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$iv->stamina.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
+								<div title="'.$locales->IV_STAMINA.': '.$iv->stamina.'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$iv->stamina.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
 									<span class="sr-only">'.$locales->IV_STAMINA.': '.$iv->stamina.'</span>'.$iv->stamina .'
 								</div>
 							</div>';
 						} else {
 							$html .= '
-							<div class="progress" style="height: 6px; width: 80%; margin: 5px auto 0 auto;">
+							<div class="progress" style="height: 6px; width: 80%; margin: 5px auto 0 auto">
 					    		<div title="'.$locales->IV_ATTACK.': '.$iv->attack.'" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$iv->attack.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(((100 / 15) * $iv->attack) / 3).'%">
 									<span class="sr-only">'.$locales->IV_ATTACK.': '.$iv->attack.'</span>
 					    		</div>
@@ -229,28 +230,30 @@ switch ($request) {
 					    		</div>
 							</div>';
 						}
+						$html .= '<small>'.$iv->cp.'</small>';
 					} else {
 						if ($config->system->iv_numbers) {
 							$html .= '
 							<div class="progress" style="height: 15px; margin-bottom: 0">
-								<div title="'.$locales->IV_ATTACK.': not available" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$iv->attack.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
-									<span class="sr-only">'.$locales->IV_ATTACK.': '.$locales->NOT_AVAILABLE.'</span>
+								<div title="'.$locales->IV_ATTACK.': not available" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$iv->attack.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
+									<span class="sr-only">'.$locales->IV_ATTACK.': '.$locales->NOT_AVAILABLE.'</span>?
 								</div>
-								<div title="'.$locales->IV_DEFENSE.': not available" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$iv->defense.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
-									<span class="sr-only">'.$locales->IV_DEFENSE.': '.$locales->NOT_AVAILABLE.'</span>
+								<div title="'.$locales->IV_DEFENSE.': not available" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'.$iv->defense.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
+									<span class="sr-only">'.$locales->IV_DEFENSE.': '.$locales->NOT_AVAILABLE.'</span>?
 								</div>
-								<div title="'.$locales->IV_STAMINA.': not available" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$iv->stamina.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px";>
-									<span class="sr-only">'.$locales->IV_STAMINA.': '.$locales->NOT_AVAILABLE.'</span>
+								<div title="'.$locales->IV_STAMINA.': not available" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$iv->stamina.'" aria-valuemin="0" aria-valuemax="45" style="width: '.(100 / 3).'%; line-height: 16px">
+									<span class="sr-only">'.$locales->IV_STAMINA.': '.$locales->NOT_AVAILABLE.'</span>?
 								</div>
 							</div>';
 						} else {
 						$html .= '
-					    <div class="progress" style="height: 6px; width: 80%; margin: 5px auto 15px auto;">
-						    <div title="IV not available" class="progress-bar" role="progressbar" style="width: 100%; background-color: rgb(210,210,210);" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
+					    <div class="progress" style="height: 6px; width: 80%; margin: 5px auto 0 auto">
+						    <div title="IV not available" class="progress-bar" role="progressbar" style="width: 100%; background-color: rgb(210,210,210)" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
 							    <span class="sr-only">IV '.$locales->NOT_AVAILABLE.'</span>
 						    </div>
 					    </div>';
 						}
+						$html .= '<small>???</small>';
 					}
 				}
 				$html .= '
