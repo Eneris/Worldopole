@@ -167,7 +167,7 @@ include_once('core/process/data.loader.php');
 					<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 					<script src="<?php auto_ver('core/js/jQAllRangeSliders-withRuler.min.js') ?>"></script>
 					<script src="<?php auto_ver('core/js/pokemon.maps.js') ?>"></script>
-					<script src="<?php auto_ver('core/js/markerclusterer.js') ?>"></script>
+					<script src="<?php auto_ver('core/js/markerclusterer.min.js') ?>"></script>
 					<script>
 						var pokemon_id = <?= $pokemon_id ?>;
 					</script>
@@ -181,7 +181,7 @@ include_once('core/process/data.loader.php');
 						}
 						.pokedexCluster.cluster2 {
 							background-image: url("core/img/bubble.png"), url("core/pokemons/<?= $pokemon_id.$config->system->pokeimg_suffix ?>"), url("core/img/m3.png");
-						}					
+						}
 					</style>
 					<?php
 					break;
@@ -191,7 +191,7 @@ include_once('core/process/data.loader.php');
 
 					<script src="<?php auto_ver('core/js/pokestops.maps.js') ?>"></script>
 					<script src="https://maps.googleapis.com/maps/api/js?key=<?= $config->system->GMaps_Key ?>&libraries=visualization&callback=initMap"></script>
-					<script src="<?php auto_ver('core/js/markerclusterer.js') ?>"></script>
+					<script src="<?php auto_ver('core/js/markerclusterer.min.js') ?>"></script>
 
 					<?php
 					break;

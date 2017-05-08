@@ -1,5 +1,6 @@
 /** global: google */
 /** global: navigator */
+/** global: MarkerClusterer */
 
 function initMap()
 {
@@ -29,6 +30,7 @@ function initMap()
 			var latitude = Number(variables['system']['map_center_lat']);
 			var longitude = Number(variables['system']['map_center_long']);
 			var zoom_level = Number(variables['system']['zoom_level']);
+			var cluster = variables.system.cluster_stops;
 
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: {
@@ -49,7 +51,7 @@ function initMap()
 					]
 				}
 			});
-
+		
 			$.getJSON( 'core/json/pogostyle.json', function( data ) {
 				var styledMap_pogo = new google.maps.StyledMapType(data, {name: 'PoGo'});
 				map.mapTypes.set('pogo_style', styledMap_pogo);
@@ -78,15 +80,15 @@ function initMap()
 			}
 
 			var infowindow = new google.maps.InfoWindow();
-
+		
 			var markers = [];
-
-			for (i = 0; i < pokestops.length; i++) {
-				marker = new google.maps.Marker({
+	
+			for (var i = 0; i < pokestops.length; i++) {
+				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(pokestops[i][2], pokestops[i][3]),
 					icon: 'core/img/'+pokestops[i][1]
 				});
-
+	
 				google.maps.event.addListener(marker, 'click', (function (marker, i) {
 						return function () {
 							infowindow.setContent(pokestops[i][0]);
@@ -96,18 +98,22 @@ function initMap()
 				if (pokestops[i][1].lastIndexOf('lured') !== -1) {
 					marker.setMap(map);
 					marker.setAnimation(google.maps.Animation.BOUNCE);
-				} else {
+				} else if (!cluster) {
+					marker.setMap(map);
+				} else {					
 					markers.push(marker);
 				}
 			}
-
-			var clusterOptions = {
-				gridSize: 80,
-				minimumClusterSize: 4,
-				cssClass: 'pokeStopCluster'
+			
+			if (cluster) {
+				var clusterOptions = {
+					gridSize: cluster.grid || 80,
+					minimumClusterSize: cluster.minCluster || 4,
+					cssClass: 'pokeStopCluster'
+				}
+				var markerCluster = new MarkerClusterer(map, [], clusterOptions);			
+				markerCluster.addMarkers(markers);
 			}
-			markerCluster = new MarkerClusterer(map, [], clusterOptions);
-			markerCluster.addMarkers(markers);
 		});
 	});
 }

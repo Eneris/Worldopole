@@ -1,11 +1,12 @@
 /** global: google */
 /** global: pokemon_id */
 /** global: navigator */
+/** global: MarkerClusterer */
 
 var map, heatmap;
 var pokemonMarkers = {};
 var updateLiveTimeout;
-var markerCluster;
+var markerCluster = false;
 
 var ivMin = 80;
 var ivMax = 100;
@@ -30,6 +31,7 @@ function initMap() {
 		var longitude = Number(variables['system']['map_center_long']);
 		var zoom_level = Number(variables['system']['zoom_level']);
 		var pokeimg_suffix = variables['system']['pokeimg_suffix'];
+		var cluster = variables.system.cluster_pokemon;
 
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: {
@@ -77,30 +79,31 @@ function initMap() {
 				}
 			});
 		}
-
-		var clusterOptions = {
-			//imagePath: 'core/img/m',
-			cssClass: 'pokedexCluster',
-			gridSize: 60,
-			minimumClusterSize: 3
+		
+		if (cluster) {
+			var clusterOptions = {
+				cssClass: 'pokedexCluster',
+				gridSize: cluster.grid || 60,
+				minimumClusterSize: cluster.minCluster || 3,
+			}
+			markerCluster = new MarkerClusterer(map, [], clusterOptions);
+			markerCluster.setCalculator(function(markers) {
+				var index = 1;
+				var len = markers.length;
+				if (len > 7 && len < 15) {
+					index = 2;
+				} else if (len >= 15){
+					index = 3;
+				}
+				return {
+					text: len,
+					index: index
+				}
+			});
 		}
-        markerCluster = new MarkerClusterer(map, [], clusterOptions);
-		markerCluster.setCalculator(function(markers) {
-			var index = 1;
-			var len = markers.length;
-			if (len > 7 && len < 15) {
-				index = 2;
-			} else if (len >= 15){
-				index = 3;
-			}
-			return {
-				text: len,
-				index: index
-			}
-		});
 		initHeatmap();
 		initSelector(pokeimg_suffix);
-
+		
 	});
 }
 
@@ -115,8 +118,8 @@ function initSelector(pokeimg_suffix){
 		hideHeatmap();
 		map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
 		initLive(pokeimg_suffix);
-
-
+		
+		
 		$('#liveSelector').addClass('active');
 		$('#heatmapSelector').removeClass('active');
 	});
@@ -137,7 +140,7 @@ function initLive(pokeimg_suffix){
 			return "IV: "+Math.round(val)+"%";
 		}
 	});
-
+	
 	$("#liveFilterSelector").bind("valuesChanged",function(e, data){
 		clearTimeout(updateLiveTimeout);
 		removePokemonMarkerByIv(data.values.min,data.values.max);
@@ -146,7 +149,7 @@ function initLive(pokeimg_suffix){
 		updateLive(pokeimg_suffix);
 	});
 	updateLive(pokeimg_suffix);
-
+	
 }
 
 function initHeatmap(){
@@ -165,7 +168,7 @@ function initHeatmap(){
 	}).done(function(bounds){
 		initHeatmapData(bounds);
 	});
-
+	
 }
 
 function initHeatmapData(bounds){
@@ -229,7 +232,7 @@ function initHeatmapData(bounds){
 }
 
 function createHeatmap() {
-
+	
 	heatmap = new google.maps.visualization.HeatmapLayer({
 		data: [],
 		map: map
@@ -308,7 +311,7 @@ function showLive() {
 	hideHeatmap();
 	clearTimeout(updateLiveTimeout);
 	$("#liveFilterContainer").show();
-
+	
 }
 
 function updateLive(pokeimg_suffix){
@@ -329,10 +332,14 @@ function updateLive(pokeimg_suffix){
 			'ivMax' : ivMax
 		}
 	}).done(function(pokemons){
-		var markers = [];
 		for (var i = 0; i < pokemons.points.length; i++) {
-			markers.push(addPokemonMarker(pokemons.points[i],pokeimg_suffix, pokemons.locale));
-		}
+			var marker = addPokemonMarker(pokemons.points[i],pokeimg_suffix, pokemons.locale);
+			if (markerCluster) {
+				markerCluster.addMarker(marker);
+			} else {
+				marker.setMap(map);
+			}
+		}		
 		updateLiveTimeout=setTimeout(function(){ updateLive(pokeimg_suffix) },5000);
 	});
 }
@@ -348,7 +355,7 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 	var encountered = false;
 	var ivPercent = 100;
 	if (pokemon.individual_attack !== null) {
-		encounter = true;
+		encountered = true;
 		ivPercent = ((100/45)*(parseInt(pokemon.individual_attack)+parseInt(pokemon.individual_defense)+parseInt(pokemon.individual_stamina))).toFixed(2);
 	}
 	var marker = new google.maps.Marker({
@@ -356,11 +363,11 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 		icon: image,
 		ivPercent: ivPercent
 	});
-	if (encountered) {
+	if (encountered) {		
 		marker.setLabel(getMarkerLabel(ivPercent));
 	}
 
-	var infoWindow = new google.maps.InfoWindow(getPokemonContent(pokemon, locale, encountered, ivPercent));
+	var infoWindow = new google.maps.InfoWindow(getPokemonContent(pokemon, locale, encountered, ivPercent));	
 	infoWindow.isClickOpen = false;
 	marker.addListener('click', function() {
 		infoWindow.isClickOpen = true;
@@ -382,9 +389,9 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 	pokemonMarkers[pokemon.encounter_id] = marker;
 	var now = new Date().getTime();
 	var endTime = new Date(pokemon.disappear_time_real.replace(/-/g, "/")).getTime();
-
-	setTimeout(function(){ removePokemonMarker(pokemon.encounter_id) },endTime-now);
-	markerCluster.addMarker(marker);
+	
+	setTimeout(function(){ removePokemonMarkerByEncounter(pokemon.encounter_id) },endTime-now);
+	return marker;
 }
 
 function getMarkerLabel(ivPercent) {
@@ -431,38 +438,48 @@ function getPokemonContent(pokemon, locale, encountered, ivPercent) {
 }
 
 function clearPokemonMarkers() {
-	for(var key in pokemonMarkers) {
-	   if (pokemonMarkers.hasOwnProperty(key)) {
-		   markerCluster.removeMarker(pokemonMarkers[key]);
-	   }
-	}
+	pokemonMakersEach(function(marker) {
+	   removePokemonMarker(marker);
+	});
 	pokemonMarkers = {};
 }
-function removePokemonMarker(encounter_id) {
-	markerCluster.removeMarker(pokemonMarkers[encounter_id]);
+function removePokemonMarkerByEncounter(encounter_id) {
+	removePokemonMarker(pokemonMarkers[encounter_id]);
 	delete pokemonMarkers[encounter_id];
 }
 
-function removePokemonMarkerByIv(ivMin,ivMax) {
-	for(var key in pokemonMarkers) {
-	   if (pokemonMarkers.hasOwnProperty(key)) {
-			var marker = pokemonMarkers[key];
-			if(marker.ivPercent < ivMin || marker.ivPercent > ivMax){
-				markerCluster.removeMarker(marker);
-				delete pokemonMarkers[key];
-			}
-	   }
+function removePokemonMarker(marker) {
+	if (markerCluster) {
+		markerCluster.removeMarker(marker);
+	} else {
+		marker.setMap(null);
 	}
+}
+
+
+function removePokemonMarkerByIv(ivMin,ivMax) {
+	pokemonMakersEach(function(marker, key) {
+		if(marker.ivPercent < ivMin || marker.ivPercent > ivMax){
+			removePokemonMarker(marker);
+			delete pokemonMarkers[key];
+		}
+	});
 }
 
 function extractEncountersId(){
 	var inmapEncounter = [];
-	for(var key in pokemonMarkers) {
+	pokemonMakersEach(function(marker, key) {
+		inmapEncounter.push(key);
+	});
+	return inmapEncounter;
+}
+
+function pokemonMakersEach(func) {
+	for(var key in pokemonMarkers) { 
 		if (pokemonMarkers.hasOwnProperty(key)) {
-			inmapEncounter.push(key);
+			func(pokemonMarkers[key], key);
 		}
 	}
-	return inmapEncounter;
 }
 
 function isTouchDevice() {
