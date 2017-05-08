@@ -187,6 +187,9 @@ switch ($request) {
 					$encdetails->attack = $data->individual_attack;
 					$encdetails->defense = $data->individual_defense;
 					$encdetails->stamina = $data->individual_stamina;
+					$encdetails->move1 = $data->move_1;
+					$encdetails->move2 = $data->move_2;
+					$encdetails->iv = number_format((100/45)*($encdetails->attack+$encdetails->defense+$encdetails->stamina), 1);
 					if (isset($encdetails->cp) && isset($encdetails->attack) && isset($encdetails->defense) && isset($encdetails->stamina)) {
 						$encdetails->available = true;
 					} else {
@@ -194,8 +197,16 @@ switch ($request) {
 					}
 				}
 
-				$html = '
-				<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="'.$pokeid.'" data-pokeuid="'.$pokeuid.'" style="display: none;">
+				if ($encdetails->available) {
+					$move1 = $pokemon->move1;
+					$move2 = $pokemon->move2;
+					$html = '
+				<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="'.$pokeid.'" data-pokeuid="'.$pokeuid.'" title="'.$encdetails->iv.'% - '.$move->$move1->name.' / '.$move->$move2->name.'" style="display: none;">';
+				} else {
+					$html = '
+				<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="'.$pokeid.'" data-pokeuid="'.$pokeuid.'" style="display: none;">';
+				}
+				$html .= '
 				<a href="pokemon/'.$pokeid.'"><img src="core/pokemons/'.$pokeid.$config->system->pokeimg_suffix.'" alt="'.$pokemons->pokemon->$pokeid->name.'" class="img-responsive"></a>
 				<a href="pokemon/'.$pokeid.'"><p class="pkmn-name">'.$pokemons->pokemon->$pokeid->name.'</p></a>
 				<a href="https://maps.google.com/?q='.$last_location->latitude.','.$last_location->longitude.'&ll='.$last_location->latitude.','.$last_location->longitude.'&z=16" target="_blank">

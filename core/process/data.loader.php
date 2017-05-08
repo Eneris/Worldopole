@@ -458,15 +458,15 @@ else {
 				$recent->encdetails->attack = $data->individual_attack;
 				$recent->encdetails->defense = $data->individual_defense;
 				$recent->encdetails->stamina = $data->individual_stamina;
+				$recent->encdetails->move1 = $data->move_1;
+				$recent->encdetails->move2 = $data->move_2;
+				$recent->encdetails->iv = number_format((100/45)*($recent->encdetails->attack+$recent->encdetails->defense+$recent->encdetails->stamina), 1);
 				if (isset($recent->encdetails->cp) && isset($recent->encdetails->attack) && isset($recent->encdetails->defense) && isset($recent->encdetails->stamina)) {
 					$recent->encdetails->available = true;
 				} else {
 					$recent->encdetails->available = false;
 				}
 			}
-
-			$recent->move1 = $data->move_1;
-			$recent->move2 = $data->move_2;
 
 			$recents[] = $recent;
 		}

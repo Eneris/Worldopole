@@ -78,13 +78,13 @@
 <div class="row area big-padding">
 	<div class="col-md-12 text-center">
 		<h2 class="text-center sub-title">
-			<?php 
+			<?php
 			if ($config->system->recents_filter) { ?>
 				<?= $locales->RECENT_MYTHIC_SPAWNS ?>
-			<?php 
+			<?php
 			} else { ?>
 				<?= $locales->RECENT_SPAWNS ?>
-			<?php 
+			<?php
 			} ?>
 		</h2>
 		<div class="last-mon-js">
@@ -92,14 +92,13 @@
 		foreach ($recents as $key => $pokemon) {
 			$id = $pokemon->id;
 			$uid = $pokemon->uid;
-			if ($pokemon->iv->available) {
-				$move1 = $pokemon->move1;
-				$move2 = $pokemon->move2;
-				$iv = number_format((100/45)*($pokemon->iv->attack+$pokemon->iv->defense+$pokemon->iv->stamina),2); ?>
-			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>" title="<?= $iv ?>% - <?= $move->$move1->name; ?> / <?= $move->$move2->name; ?>">
-		<?php } else { ?>
+			if ($pokemon->encdetails->available) {
+				$move1 = $pokemon->encdetails->move1;
+				$move2 = $pokemon->encdetails->move2; ?>
+			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>" title="<?= $pokemon->encdetails->iv ?>% - <?= $move->$move1->name; ?> / <?= $move->$move2->name; ?>">
+			<?php } else { ?>
 			<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="<?= $id ?>" data-pokeuid="<?= $uid ?>">
-		<?php } ?>
+			<?php } ?>
 				<a href="pokemon/<?= $id ?>"><img src="core/pokemons/<?= $id.$config->system->pokeimg_suffix ?>" alt="<?= $pokemons->pokemon->$id->name ?>" class="img-responsive"></a>
 				<a href="pokemon/<?= $id ?>"><p class="pkmn-name"><?= $pokemons->pokemon->$id->name ?></p></a>
 				<a href="https://maps.google.com/?q=<?= $pokemon->last_location->latitude ?>,<?= $pokemon->last_location->longitude ?>&ll=<?= $pokemon->last_location->latitude ?>,<?= $pokemon->last_location->longitude ?>&z=16" target="_blank">
@@ -120,7 +119,7 @@
 									<span class="sr-only"><?= $locales->STAMINA ?> IV: <?= $pokemon->encdetails->stamina ?></span><?= $pokemon->encdetails->stamina ?>
 								</div>
 							</div>
-						<?php 
+						<?php
 						} else { ?>
 							<div class="progress" style="height: 6px; width: 80%; margin: 5px auto 0 auto;">
 								<div title="Attack IV: <?= $pokemon->encdetails->attack ?>" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?= $pokemon->encdetails->attack ?>" aria-valuemin="0" aria-valuemax="45" style="width: <?= ((100/15)*$pokemon->encdetails->attack)/3 ?>%">
@@ -150,7 +149,7 @@
 									<span class="sr-only"><?= $locales->STAMINA ?> IV: <?= $locales->NOT_AVAILABLE ?></span>?
 								</div>
 							</div>
-						<?php 
+						<?php
 						} else { ?>
 						<div class="progress" style="height: 6px; width: 80%; margin: 5px auto 0 auto;">
 							<div title="IV not available" class="progress-bar" role="progressbar" style="width: 100%; background-color: rgb(210,210,210)" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
@@ -176,7 +175,7 @@
 <div class="row big padding">
 	<h2 class="text-center sub-title"><?= $locales->FIGHT_TITLE ?></h2>
 
-		<?php 
+		<?php
 			foreach ($home->teams as $team => $total) {
 				if ($home->teams->rocket) { ?>
 
@@ -199,7 +198,7 @@
 				} ?>
 							</div>
 						</div>
-					</div>					
+					</div>
 				<?php
 			} ?>
 </div>
