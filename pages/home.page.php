@@ -9,7 +9,7 @@
 			<!--<br>
 			<h4 style="color:rgb(210,118,118)">HINWEIS: Aktuell laufen Wartungsarbeiten, so dass für einige Stunden keine vollständige Abdeckung gewährleistet werden kann.</h4>-->
 			<br>
-			<h4 style="color:rgb(210,118,118)">HINWEIS: Aufgrund aktueller Änderungen der Spielmechanik (zufällige IV-Werte / Movesets je nach Spielerlevel) werden diese Werte bis auf weiteres nicht mehr ausgelesen und angezeigt.</h4>
+			<h4 style="color:rgb(62,150,62)">HINWEIS: Wir haben es geschafft! FÜr die meisten Pokémon werden nun wieder die IV-Werte / Movesets und jetzt sogar WP-Werte für Level 30+ Spieler ausgelesen und angezeigt.</h4>
 			<br>
 			<h4>Bei Fragen oder Anregungen schreib einfach eine Email an <a href="mailto:help@pogochemnitz.ovh">help@pogochemnitz.ovh</a><br>oder komme in unsere neue <a href="https://t.me/joinchat/AAAAAEJgykPimJ0T20yqnA" target="_blank">PoGo Chemnitz Talk</a> Telegram Gruppe</h4>
 			<br>
