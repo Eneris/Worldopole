@@ -565,7 +565,6 @@ pokestops
 }
 
 #gymsContainer td.level img, #gymShaverContainer td.level img {
-	height: 2em;
 	margin-right: .5em;
 }
 
@@ -578,12 +577,12 @@ pokestops
 }
 
 #gymsContainer td ul, #gymShaverContainer td ul {
-	margin-bottom: -8px;
+	margin-bottom: 0;
 	min-height: 71px;
+	line-height: initial;
 }
 
 #gymsContainer td ul li, #gymShaverContainer td ul li {
-	line-height: initial;
 	width: 5em;
 	overflow: hidden;
 	text-align: center;
