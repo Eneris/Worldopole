@@ -125,10 +125,8 @@ function loadTopShaver() {
 			'type' : 'gymshaver_count'
 		}
 	}).done(function (data) {
-		var index = 0;
 		$.each(data.entries, function (idx, entry) {
-			index++;
-			printTopShaver(index, entry, data.locale);
+			printTopShaver(idx, entry, data.locale);
 		});
 		$('.topShaverLoader').hide();
 	});
@@ -318,7 +316,7 @@ function printGymShaver(gym, pokeimg_suffix, locale) {
 
 function printTopShaver($index, entry, locale) {
 	var shaver = $('<tr>').css('border-bottom', '2px solid '+(entry.team=='3'?'#ffbe08':entry.team=='2'?'#ff7676':entry.team=='1'?'#00aaff':'#ddd'));
-	shaver.append($('<td>', $index));
+	shaver.append($('<td>',{text: ($index+1)}));
 	shaver.append($('<td>').append($('<a>', {class: 'no-link', href: 'trainer?name='+entry.name, text: entry.name})));
 	shaver.append($('<td>').append($('<img />', {src:'core/img/map_'+(entry.team=='1'?'blue':entry.team=='2'?'red':entry.team=='3'?'yellow':'white')+'.png'})));
 	shaver.append($('<td>',{text: entry.level, class: 'level'}));
