@@ -47,6 +47,7 @@
 					<th>#</th>
 					<th>Name</th>
 					<th>Team</th>
+					<th>Level</th>
 					<th>Count</th>
 				</tr>
 			</thead>
@@ -55,7 +56,7 @@
 			</tbody>
 			<tfoot>
 				<tr class="topShaverLoader">
-					<td colspan="4"><div class="loader"></div></td>
+					<td colspan="5"><div class="loader"></div></td>
 				</tr>
 			</tfoot>
 		</table>
