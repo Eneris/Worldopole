@@ -1,20 +1,37 @@
 /** global: google */
 /** global: pokemon_id */
 /** global: navigator */
+/** global: MarkerClusterer */
 
 var map, heatmap;
-var pokemonMarkers = [];
+var pokemonMarkers = {};
 var updateLiveTimeout;
+var markerCluster = false;
 
 var ivMin = 80;
 var ivMax = 100;
 
 function initMap() {
-	$.getJSON( "core/json/variables.json", function( variables ) {
+	var geoOpts = {
+		'type': "GET",
+		'global': false,
+		'dataType': 'json',
+		'url': "core/process/aru.php",
+		'data': {
+			'request': "",
+			'target': 'arrange_url',
+			'method': 'method_target',
+			'type': 'maps_localization_coordinates'
+		}
+	}
+	$.when($.getJSON( "core/json/variables.json"), $.ajax(geoOpts)).then(function (response1, response2) {
+		var variables = response1[0];
+		var coordinates = response2[0];
 		var latitude = Number(variables['system']['map_center_lat']);
 		var longitude = Number(variables['system']['map_center_long']);
 		var zoom_level = Number(variables['system']['zoom_level']);
 		var pokeimg_suffix = variables['system']['pokeimg_suffix'];
+		var cluster = variables.system.cluster_pokemon;
 
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: {
@@ -48,35 +65,42 @@ function initMap() {
 			map.set('styles', data);
 		});
 
-		$.ajax({
-			'async': true,
-			'type': "GET",
-			'global': false,
-			'dataType': 'json',
-			'url': "core/process/aru.php",
-			'data': {
-				'request': "",
-				'target': 'arrange_url',
-				'method': 'method_target',
-				'type': 'maps_localization_coordinates'
-			}
-		}).done(function(coordinates) {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var pos = {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude
-					};
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				};
 
-					if (position.coords.latitude <= coordinates.max_latitude && position.coords.latitude >= coordinates.min_latitude) {
-						if (position.coords.longitude <= coordinates.max_longitude && position.coords.longitude >= coordinates.min_longitude) {
-							map.setCenter(pos);
-						}
+				if (position.coords.latitude <= coordinates.max_latitude && position.coords.latitude >= coordinates.min_latitude) {
+					if (position.coords.longitude <= coordinates.max_longitude && position.coords.longitude >= coordinates.min_longitude) {
+						map.setCenter(pos);
 					}
-				});
-			}
-		});
+				}
+			});
+		}
 		
+		if (cluster) {
+			var clusterOptions = {
+				cssClass: 'pokedexCluster',
+				gridSize: cluster.grid || 60,
+				minimumClusterSize: cluster.minCluster || 3,
+			}
+			markerCluster = new MarkerClusterer(map, [], clusterOptions);
+			markerCluster.setCalculator(function(markers) {
+				var index = 1;
+				var len = markers.length;
+				if (len > 7 && len < 15) {
+					index = 2;
+				} else if (len >= 15){
+					index = 3;
+				}
+				return {
+					text: len,
+					index: index
+				}
+			});
+		}
 		initHeatmap();
 		initSelector(pokeimg_suffix);
 		
@@ -309,8 +333,13 @@ function updateLive(pokeimg_suffix){
 		}
 	}).done(function(pokemons){
 		for (var i = 0; i < pokemons.points.length; i++) {
-			addPokemonMarker(pokemons.points[i],pokeimg_suffix, pokemons.locale)
-		}
+			var marker = addPokemonMarker(pokemons.points[i],pokeimg_suffix, pokemons.locale);
+			if (markerCluster) {
+				markerCluster.addMarker(marker);
+			} else {
+				marker.setMap(map);
+			}
+		}		
 		updateLiveTimeout=setTimeout(function(){ updateLive(pokeimg_suffix) },5000);
 	});
 }
@@ -323,51 +352,22 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 		anchor: new google.maps.Point(16, 16),
 		labelOrigin : new google.maps.Point(16, 36)
 	};
-	var encounter = false;
+	var encountered = false;
 	var ivPercent = 100;
 	if (pokemon.individual_attack !== null) {
-		encounter = true;
+		encountered = true;
 		ivPercent = ((100/45)*(parseInt(pokemon.individual_attack)+parseInt(pokemon.individual_defense)+parseInt(pokemon.individual_stamina))).toFixed(2);
 	}
 	var marker = new google.maps.Marker({
 		position: {lat: parseFloat(pokemon.latitude), lng:parseFloat(pokemon.longitude)},
-		map: map,
 		icon: image,
-		encounterId: pokemon.encounter_id,
 		ivPercent: ivPercent
 	});
-	if (encounter) {
-		marker.setLabel({
-			color:getIvColor(ivPercent),
-			text:ivPercent+"%"
-		});
+	if (encountered) {		
+		marker.setLabel(getMarkerLabel(ivPercent));
 	}
-	var contentString = '<div>'+
-			'<h4> '+pokemon.name+' #'+pokemon.pokemon_id+ (encounter?' IV: '+ivPercent+'% ':'')+'</h4>'+
-			'<div id="bodyContent">'+
-				'<p class="disappear_time_display text-center">'+pokemon.disappear_time_real+'<span class="disappear_time_display_timeleft"></span></p>';
-	if (encounter) {
-		contentString +=
-				'<p></p>'+
-				'<div class="progress" style="height: 6px; width: 120px; margin-bottom: 10px; margin-top: 2px; margin-left: auto; margin-right: auto">'+
-					'<div title="'+locale.ivAttack+': '+pokemon.individual_attack+'" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+pokemon.individual_attack+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_attack)/3)+'%">'+
-						'<span class="sr-only">'+locale.ivAttack+': '+pokemon.individual_attack+'</span>'+
-					'</div>'+
-					'<div title="'+locale.ivDefense+': '+pokemon.individual_defense+'" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+pokemon.individual_defense+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_defense)/3)+'%">'+
-						'<span class="sr-only">'+locale.ivDefense+': '+pokemon.individual_defense+'</span>'+
-					'</div>'+
-					'<div title="'+locale.ivStamina+': '+pokemon.individual_stamina+'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+pokemon.individual_stamina+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_stamina)/3)+'%">'+
-						'<span class="sr-only">'+locale.ivStamina+': '+pokemon.individual_stamina+'</span>'+
-					'</div>'+
-				'</div>'+
-				'<p class="text-center">('+pokemon.individual_attack+"/"+pokemon.individual_defense+"/"+pokemon.individual_stamina+')</p>'+
-				'<p class="text-center">'+pokemon.quick_move+"/"+pokemon.charge_move+'</p>';
-		}
-		contentString +='</div>';
 
-	var infoWindow = new google.maps.InfoWindow({
-		content: contentString
-	});
+	var infoWindow = new google.maps.InfoWindow(getPokemonContent(pokemon, locale, encountered, ivPercent));	
 	infoWindow.isClickOpen = false;
 	marker.addListener('click', function() {
 		infoWindow.isClickOpen = true;
@@ -386,67 +386,100 @@ function addPokemonMarker(pokemon,pokeimg_suffix, locale) {
 			infoWindow.close();
 		}
 	});
-	pokemonMarkers.push(marker);
+	pokemonMarkers[pokemon.encounter_id] = marker;
 	var now = new Date().getTime();
 	var endTime = new Date(pokemon.disappear_time_real.replace(/-/g, "/")).getTime();
 	
-	setTimeout(function(){ removePokemonMarker(pokemon.encounter_id) },endTime-now);
+	setTimeout(function(){ removePokemonMarkerByEncounter(pokemon.encounter_id) },endTime-now);
+	return marker;
 }
 
-
-function getIvColor(ivPercent){
-	var ivColor="rgba(0, 0, 0, 0)";
-	if(ivPercent>80){
-		ivColor="rgba(0, 0, 255, 0.70)";
+function getMarkerLabel(ivPercent) {
+	if(ivPercent<80){
+		return null;
 	}
+	var ivColor="rgba(0, 0, 255, 0.70)";
 	if(ivPercent>90){
 		ivColor="rgba(246, 178, 107, 0.90)";
 	}
 	if(ivPercent>99){
 		ivColor="rgba(255, 0, 0, 1)";
 	}
-	return ivColor;
+	return {
+			color:ivColor,
+			text:ivPercent+"%"
+		};
+}
+
+function getPokemonContent(pokemon, locale, encountered, ivPercent) {
+	var contentString = '<div>'+
+			'<h4> '+pokemon.name+' #'+pokemon.pokemon_id+ (encountered?' IV: '+ivPercent+'% ':'')+'</h4>'+
+			'<div id="bodyContent">'+
+				'<p class="disappear_time_display text-center">'+pokemon.disappear_time_real+'<span class="disappear_time_display_timeleft"></span></p>';
+	if (encountered) {
+		contentString +=
+				'<p></p>'+
+				'<div class="progress" style="height: 6px; width: 120px; margin-bottom: 10px; margin-top: 2px; margin-left: auto; margin-right: auto">'+
+					'<div title="'+locale.ivAttack+': '+pokemon.individual_attack+'" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'+pokemon.individual_attack+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_attack)/3)+'%">'+
+						'<span class="sr-only">'+locale.ivAttack+': '+pokemon.individual_attack+'</span>'+
+					'</div>'+
+					'<div title="'+locale.ivDefense+': '+pokemon.individual_defense+'" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+pokemon.individual_defense+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_defense)/3)+'%">'+
+						'<span class="sr-only">'+locale.ivDefense+': '+pokemon.individual_defense+'</span>'+
+					'</div>'+
+					'<div title="'+locale.ivStamina+': '+pokemon.individual_stamina+'" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'+pokemon.individual_stamina+'" aria-valuemin="0" aria-valuemax="45" style="width: '+(((100/15)*pokemon.individual_stamina)/3)+'%">'+
+						'<span class="sr-only">'+locale.ivStamina+': '+pokemon.individual_stamina+'</span>'+
+					'</div>'+
+				'</div>'+
+				'<p class="text-center">('+pokemon.individual_attack+"/"+pokemon.individual_defense+"/"+pokemon.individual_stamina+')</p>'+
+				'<p class="text-center">'+pokemon.quick_move+"/"+pokemon.charge_move+'</p>';
+	}
+	contentString +='</div>';
+	return {content: contentString};
 }
 
 function clearPokemonMarkers() {
-	for (var i = 0; i < pokemonMarkers.length; i++) {
-		pokemonMarkers[i].setMap(null);
-	}
-	pokemonMarkers = [];
+	pokemonMakersEach(function(marker) {
+	   removePokemonMarker(marker);
+	});
+	pokemonMarkers = {};
 }
-function removePokemonMarker(encounter_id) {
-	for (var i = 0; i < pokemonMarkers.length; i++) {
-		if(pokemonMarkers[i].encounterId == encounter_id){
-			pokemonMarkers[i].setMap(null);
-			pokemonMarkers.splice(i,1);
-			break;
-		}
-		
-	}
-	
+function removePokemonMarkerByEncounter(encounter_id) {
+	removePokemonMarker(pokemonMarkers[encounter_id]);
+	delete pokemonMarkers[encounter_id];
 }
 
-function removePokemonMarkerByIv(ivMin,ivMax) {
-	var cleanMarkers=[];
-	for (var i = 0; i < pokemonMarkers.length; i++) {
-		if(pokemonMarkers[i].ivPercent < ivMin || pokemonMarkers[i].ivPercent > ivMax){
-			pokemonMarkers[i].setMap(null);
-		}
-		else{
-			cleanMarkers.push(pokemonMarkers[i]);
-		}
-		
+function removePokemonMarker(marker) {
+	if (markerCluster) {
+		markerCluster.removeMarker(marker);
+	} else {
+		marker.setMap(null);
 	}
-	pokemonMarkers = cleanMarkers;
+}
+
+
+function removePokemonMarkerByIv(ivMin,ivMax) {
+	pokemonMakersEach(function(marker, key) {
+		if(marker.ivPercent < ivMin || marker.ivPercent > ivMax){
+			removePokemonMarker(marker);
+			delete pokemonMarkers[key];
+		}
+	});
 }
 
 function extractEncountersId(){
 	var inmapEncounter = [];
-	for (var i = 0; i < pokemonMarkers.length; i++) {
-		inmapEncounter[i]=pokemonMarkers[i].encounterId;
-	}
-	
+	pokemonMakersEach(function(marker, key) {
+		inmapEncounter.push(key);
+	});
 	return inmapEncounter;
+}
+
+function pokemonMakersEach(func) {
+	for(var key in pokemonMarkers) { 
+		if (pokemonMarkers.hasOwnProperty(key)) {
+			func(pokemonMarkers[key], key);
+		}
+	}
 }
 
 function isTouchDevice() {
