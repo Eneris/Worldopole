@@ -39,6 +39,36 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-center">
+			<h3>Recent Gym Shaving</h3>
+		</div>
+		<table class="table" id="gymShaverTable">
+			<thead>
+				<tr>
+					<th>Time</th>
+					<th>Gym</th>
+					<th>Level</th>
+					<th>Prestige</th>
+					<th>Pokémon</th>
+				</tr>
+			</thead>
+			<tbody id="gymShaverContainer">
+
+			</tbody>
+			<tfoot>
+				<tr class="loadMore text-center">
+					<td colspan="7"><button id="loadMoreButtonShaver" class="btn btn-default hidden"><?= $locales->TRAINERS_LOAD_MORE ?></button></td>
+				</tr>
+				<tr class="gymShaverLoader">
+					<td colspan="7"><div class="loader"></div></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="text-center">
 			<h3>Recent Gym Activity</h3>
 		</div>
 		<table class="table" id="gymsTable">

@@ -797,6 +797,100 @@ switch ($request) {
 		break;
 
 
+	case 'gymshaver':
+		$where = '';
+		$order = '';
+		$page = '0';
+		$ranking = '0';
+		if (isset($_GET['name']) && $_GET['name'] != '') {
+			$gym_name = mysqli_real_escape_string($mysqli, $_GET['name']);
+			$where = " WHERE gym_details.name LIKE '%".$gym_name."%'";
+		}
+		if (isset($_GET['team']) && $_GET['team'] != '') {
+			$team = mysqli_real_escape_string($mysqli, $_GET['team']);
+			$where .= ($where == "" ? " WHERE" : " AND")." gym_after.team_id = ".$team;
+		}
+		if (isset($_GET['page'])) {
+			$page = mysqli_real_escape_string($mysqli, $_GET['page']);
+		}
+		if (isset($_GET['ranking'])) {
+			$ranking = mysqli_real_escape_string($mysqli, $_GET['ranking']);
+		}
+
+		switch ($ranking) {
+			case 1:
+				$order = " ORDER BY gym_details.name, gym_after.last_modified DESC";
+				break;
+			case 2:
+				$order = " ORDER BY gym_after.gym_points DESC, gym_after.last_modified DESC";
+				break;
+			default:
+				$order = " ORDER BY gym_after.last_modified DESC, gym_details.name";
+		}
+
+		$limit = " LIMIT ".($page * 5).",5";
+
+		$entries = array();
+
+		$req = "SELECT gym_after.gym_id, gym_details.name, gym_after.team_id, (CONVERT_TZ(MAX(gym_after.last_modified), '+00:00', '".$time_offset."')) AS last_modified_end, MAX(gym_after.gym_points) AS gym_points_end, (CONVERT_TZ(MIN(gym_before.last_modified), '+00:00', '".$time_offset."')) AS last_modified_start, MAX(gym_before.gym_points) AS gym_points_start, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
+				FROM gymhistory AS gym_middle
+				JOIN gymhistory AS gym_before
+				ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
+				JOIN gymhistory AS gym_after
+				ON gym_middle.gym_id = gym_after.gym_id AND gym_middle.team_id = gym_after.team_id AND (gym_after.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified < gym_after.last_modified AND gym_middle.last_modified > (gym_after.last_modified - INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_after.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-24 AND LENGTH(gym_before.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-5 AND LENGTH(gym_before.pokemon_uids) < LENGTH(gym_after.pokemon_uids)+5
+				JOIN gymdetails AS gym_details
+				ON gym_after.gym_id = gym_details.gym_id
+				".$where."
+				GROUP BY gym_after.gym_id, gym_after.pokemon_uids, gym_before.pokemon_uids
+				".$order.$limit;
+
+		$result = $mysqli->query($req);
+		while ($result && $data = $result->fetch_object()) {
+			$pokemon = array();
+			$pokemon_end = explode(',', $data->pokemon_uids_end);
+			$pokemon_start = explode(',', $data->pokemon_uids_start);
+			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
+			$old_pokemon = array_diff($pokemon_start, $pokemon_end);
+			$all_pokemon = array_merge($pokemon_end, $old_pokemon);
+			foreach ($all_pokemon as $pkm) {
+				$pokemon[$pkm] = new stdClass();
+			}
+
+			$data->gym_points_diff = $data->gym_points_end - $data->gym_points_start;
+			$data->class = $data->gym_points_diff > 0 ? 'gain' : ($data->gym_points_diff < 0 ? 'loss' : '');
+
+			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
+					FROM gympokemon
+					WHERE pokemon_uid IN ('".implode("','", $all_pokemon)."')";
+
+			$pkm_result = $mysqli->query($pkm_req);
+			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
+				$pokemon[$pkm_data->pokemon_uid] = $pkm_data;
+			}
+			foreach ($new_pokemon as $pkm) {
+				$pokemon[$pkm]->class = 'new';
+			}
+			foreach ($old_pokemon as $pkm) {
+				$pokemon[$pkm]->class = 'old';
+			}
+
+			$data->pokemon = $pokemon;
+			unset($data->pokemon_uids_end);
+			unset($data->pokemon_uids_start);
+			$data->gym_id = str_replace('.', '_', $data->gym_id);
+			$entries[] = $data;
+		}
+
+		$json = array();
+		$json['entries'] = $entries;
+		$locale = array();
+		$json['locale'] = $locale;
+
+		header('Content-Type: application/json');
+		echo json_encode($json);
+
+		break;
+
 	case 'pokemon_slider_init':
 		$req 		= "SELECT MIN(disappear_time) AS min, MAX(disappear_time) AS max FROM pokemon";
 		$result 	= $mysqli->query($req);

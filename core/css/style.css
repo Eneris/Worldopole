@@ -551,7 +551,7 @@ pokestops
 	background-position: 9px 6px, 0px 0px;
 }
 
-#gymsContainer td  {
+#gymsContainer td, #gymShaverContainer td  {
 	vertical-align: middle;
 	line-height: 2em;
 }
@@ -560,29 +560,29 @@ pokestops
 	padding-left: 10px;
 }
 
-#gymsContainer td.level {
+#gymsContainer td.level, #gymShaverContainer td.level {
 	width: 68px;
 }
 
-#gymsContainer td.level img {
+#gymsContainer td.level img, #gymShaverContainer td.level img {
 	height: 2em;
 	margin-right: .5em;
 }
 
-#gymsContainer td.loss {
+#gymsContainer td.loss, #gymShaverContainer td.loss {
 	color: rgb(210,118,118);
 }
 
-#gymsContainer td.gain {
+#gymsContainer td.gain, #gymShaverContainer td.gain {
 	color: rgb(62,150,62);
 }
 
-#gymsContainer td ul {
+#gymsContainer td ul, #gymShaverContainer td ul {
 	margin-bottom: -8px;
 	min-height: 71px;
 }
 
-#gymsContainer td ul li {
+#gymsContainer td ul li, #gymShaverContainer td ul li {
 	line-height: initial;
 	width: 5em;
 	overflow: hidden;
@@ -611,12 +611,12 @@ pokestops
 	}
 }
 
-#gymsContainer td ul li.new {
+#gymsContainer td ul li.new, #gymShaverContainer td ul li.new {
 	background-color: rgba(62,150,62,.25);
 	display: inline-block !important;
 }
 
-#gymsContainer td ul li.old {
+#gymsContainer td ul li.old, #gymShaverContainer td ul li.old {
 	background-color: rgba(210,118,118,.25);
 	display: inline-block !important;
 }
