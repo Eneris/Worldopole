@@ -39,6 +39,32 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-center">
+			<h3>Top 10 Gym Shavers</h3>
+		</div>
+		<table class="table" id="topShaverTable">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Team</th>
+					<th>Count</th>
+				</tr>
+			</thead>
+			<tbody id="topShaverContainer">
+
+			</tbody>
+			<tfoot>
+				<tr class="topShaverLoader">
+					<td colspan="4"><div class="loader"></div></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="text-center">
 			<h3>Recent Gym Shaving</h3>
 		</div>
 		<table class="table" id="gymShaverTable">

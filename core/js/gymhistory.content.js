@@ -18,20 +18,24 @@ $(function () {
 	$.getJSON("core/json/variables.json", function(variables) {
 		var pokeimg_suffix = variables['system']['pokeimg_suffix'];
 
+		$('.topShaverLoader').hide();
+		$('.gymShaverLoader').hide();
 		$('.gymLoader').hide();
+
 		var pageShaver = 0;
 		var page = 0;
 		var teamSelector = ''; //''=all;0=neutral;1=Blue;2=Red;3=Yellow
 		var rankingFilter = 0; //0=Level & Gyms; 1=Level; 2=Gyms
 
 		$('input#name').filter(':visible').val(gymName);
-		loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), null, null, pokeimg_suffix, true);
+		loadTopShaver();
+		loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), null, null, pokeimg_suffix);
 		loadGyms(page, $('input#name').filter(':visible').val(), null, null, pokeimg_suffix, true);
 
 		pageShaver++;
 		page++;
 		$('#loadMoreButtonShaver').click(function () {
-			loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, true);
+			loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
 			pageShaver++;
 		});
 		$('#loadMoreButton').click(function () {
@@ -43,7 +47,7 @@ $(function () {
 			page = 0;
 			$('#gymsContainer tr:not(.gymsTemplate)').remove();
 			$('#gymShaverContainer tr:not(.gymsTemplate)').remove();
-			loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, true);
+			loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
 			loadGyms(page, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, true);
 			page++;
 			pageShaver++;
@@ -95,7 +99,7 @@ $(function () {
 				$('#gymsContainer').empty();
 				$('#gymShaverContainer').empty();
 				$('input#name').filter(':visible').val(window.history.state.name);
-				loadGymShaver(0, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, false);
+				loadGymShaver(0, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
 				loadGyms(0, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, false);
 			} else {
 				window.history.back();
@@ -105,7 +109,30 @@ $(function () {
 	});
 });
 
-function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayOnPage) {
+function loadTopShaver() {
+	$('.topShaverLoader').show();
+
+	$.ajax({
+		'async': true,
+		'type': "GET",
+		'global': false,
+		'dataType': 'json',
+		'url': "core/process/aru.php",
+		'data': {
+			'request': '',
+			'target': 'arrange_url',
+			'method': 'method_target',
+			'type' : 'gymshaver_count'
+		}
+	}).done(function (data) {
+		$.each(data.entries, function (idx, entry) {
+			printTopShaver(idx, entry, data.locale);
+		});
+		$('.topShaverLoader').hide();
+	});
+}
+
+function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix) {
 	$('.gymShaverLoader').show();
 
 	$.ajax({
@@ -285,4 +312,13 @@ function printGymShaver(gym, pokeimg_suffix, locale) {
 	var gymPokemon = printPokemonList(gym.pokemon, pokeimg_suffix, true);
 	gymsInfos.append($('<td>').append(gymPokemon));
 	$('#gymShaverContainer').append(gymsInfos);
+}
+
+function printTopShaver($idx, entry, locale) {
+	var shaver = $('<tr>').css('border-bottom', '2px solid '+(entry.team=='3'?'#ffbe08':entry.team=='2'?'#ff7676':entry.team=='1'?'#00aaff':'#ddd'));
+	shaver.append($('<td>', $idx + 1));
+	shaver.append($('<td>').append($('<a>', {class: 'no-link', href: 'trainer?name='+entry.name, text: entry.name})));
+	shaver.append($('<td>',{text: entry.level, class: 'level'}).prepend($('<img />', {src:'core/img/map_'+(entry.team=='1'?'blue':entry.team=='2'?'red':entry.team=='3'?'yellow':'white')+'.png'})));
+	shaver.append($('<td>',{text: parseInt(entry.count)}));
+	$('#topShaverContainer').append(shaver);
 }
