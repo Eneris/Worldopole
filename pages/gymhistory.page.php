@@ -71,9 +71,9 @@
 		<table class="table" id="gymShaverStatsTable">
 			<thead>
 				<tr>
-					<td><strong>Last day:</strong> <span class="count-day">0</span></td>
-					<td><strong>Last week:</strong> <span class="count-week">0</span></td>
-					<td><strong>Total:</strong> <span class="count-total">0</span></td>
+					<td><h4><strong>Last day:</strong> <span class="count-day">0</span></h4></td>
+					<td><h4><strong>Last week:</strong> <span class="count-week">0</span></h4></td>
+					<td><h4><strong>Total:</strong> <span class="count-total">0</span></h4></td>
 				</tr>
 			</thead>
 		</table>
