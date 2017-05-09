@@ -911,7 +911,7 @@ switch ($request) {
 				JOIN gymdetails AS gym_details
 				ON gym_after.gym_id = gym_details.gym_id
 				GROUP BY gym_after.gym_id, gym_after.pokemon_uids, gym_before.pokemon_uids
-				ORDER BY gym_after.last_modified";
+				ORDER BY gym_after.last_modified DESC";
 
 		$result = $mysqli->query($req);
 
