@@ -14,7 +14,6 @@ var gymRanks = [
 ];
 
 $(function () {
-
 	$.getJSON("core/json/variables.json", function(variables) {
 		var pokeimg_suffix = variables['system']['pokeimg_suffix'];
 
@@ -58,7 +57,7 @@ $(function () {
 			gymShaverLoaded = true;
 		});
 
-		$("#searchGyms").submit(function ( event ) {
+		$('#searchGyms').submit(function ( event ) {
 			pageShaver = 0;
 			page = 0;
 			gymHistoryLoaded = false;
@@ -78,60 +77,67 @@ $(function () {
 				case "NeutralTeamsFilter":
 					teamSelector=0;
 					break;
-				case "BlueTeamFilter":
+				case 'BlueTeamFilter':
 					teamSelector=1;
 					break;
-				case "RedTeamFilter":
+				case 'RedTeamFilter':
 					teamSelector=2;
 					break;
-				case "YellowFilter":
+				case 'YellowFilter':
 					teamSelector=3;
 					break;
 				default:
 					teamSelector='';
 			}
-			$("#teamSelectorText").html($(this).html());
+			$('#teamSelectorText').html($(this).html());
 			event.preventDefault();
-			$("#searchGyms").submit();
+			$('#searchGyms').submit();
 		});
 
-		$(".rankingOrderItems").click(function ( event ) {
-			switch ($(this).attr("id")) {
-				case "changedFirst":
+		$('.rankingOrderItems').click(function ( event ) {
+			switch ($(this).attr('id')) {
+				case 'changedFirst':
 					rankingFilter=0;
 					break;
-				case "nameFirst":
+				case 'nameFirst':
 					rankingFilter=1;
 					break;
-				case "prestigeFirst":
+				case 'prestigeFirst':
 					rankingFilter=2;
 					break;
 				default:
 					rankingFilter=0;
 			}
-			$("#rankingOrderText").html($(this).html());
+			$('#rankingOrderText').html($(this).html());
 			event.preventDefault();
-			$("#searchGyms").submit();
+			$('#searchGyms').submit();
 		});
 
 		window.onpopstate = function() {
-			if (window.history.state && "gymhistory" === window.history.state.page) {
+			if (window.history.state && 'gymhistory' === window.history.state.page) {
+				$('input#name').filter(':visible').val(window.history.state.name);
+				page = 0;
+				pageShaver = 0;
+				gymHistoryLoaded = false;
+				gymShaverLoaded = false;
 				$('#gymsContainer').empty();
 				$('#gymShaverContainer').empty();
-				$('input#name').filter(':visible').val(window.history.state.name);
-				loadGymShaver(0, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
-				loadGyms(0, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, false);
+				if ($('a[href="#gymHistory"]').parent().hasClass('active')) {
+					loadGyms(page, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, false);
+					page++;
+					gymHistoryLoaded = true;
+				} else if ($('a[href="#gymShaver"]').parent().hasClass('active')) {
+					$('a[href="#gymShaver"]').trigger('click');
+				}
 			} else {
 				window.history.back();
 			}
 		};
-
 	});
 });
 
 function loadTopShaver() {
 	$('.topShaverLoader').show();
-
 	$.ajax({
 		'async': true,
 		'type': "GET",
@@ -168,17 +174,13 @@ function loadTopShaver() {
 
 function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix) {
 	$('.gymShaverLoader').show();
-
 	$.ajax({
 		'async': true,
-		'type': "GET",
+		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
-		'url': "core/process/aru.php",
+		'url': 'core/process/aru.php',
 		'data': {
-			'request': '',
-			'target': 'arrange_url',
-			'method': 'method_target',
 			'type' : 'gymshaver',
 			'page' : page,
 			'name' : name,
@@ -194,8 +196,7 @@ function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix) 
 		if (internalIndex < 5) {
 			$('#loadMoreButtonShaver').hide();
 		} else {
-			$('#loadMoreButtonShaver').removeClass('hidden');
-			$('#loadMoreButtonShaver').show();
+			$('#loadMoreButtonShaver').removeClass('hidden').show();
 		}
 		$('.gymShaverLoader').hide();
 	});
@@ -203,7 +204,6 @@ function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix) 
 
 function loadGyms(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayOnPage) {
 	$('.gymLoader').show();
-
 	if (stayOnPage) {
 		// build a state for this name
 		var state = {name: name, page: 'gymhistory'};
@@ -211,14 +211,11 @@ function loadGyms(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayO
 	}
 	$.ajax({
 		'async': true,
-		'type': "GET",
+		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
-		'url': "core/process/aru.php",
+		'url': 'core/process/aru.php',
 		'data': {
-			'request': '',
-			'target': 'arrange_url',
-			'method': 'method_target',
 			'type' : 'gyms',
 			'page' : page,
 			'name' : name,
@@ -234,8 +231,7 @@ function loadGyms(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayO
 		if (internalIndex < 10) {
 			$('#loadMoreButton').hide();
 		} else {
-			$('#loadMoreButton').removeClass('hidden');
-			$('#loadMoreButton').show();
+			$('#loadMoreButton').removeClass('hidden').show();
 		}
 		$('.gymLoader').hide();
 	});
@@ -244,17 +240,13 @@ function loadGyms(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayO
 function loadGymHistory(page, gym_id, pokeimg_suffix) {
 	$('#gymHistory_'+gym_id).addClass('active').show();
 	$('#gymHistory_'+gym_id).find('.gymHistoryLoader').show();
-
 	$.ajax({
 		'async': true,
-		'type': "GET",
+		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
-		'url': "core/process/aru.php",
+		'url': 'core/process/aru.php',
 		'data': {
-			'request': '',
-			'target': 'arrange_url',
-			'method': 'method_target',
 			'type' : 'gymhistory',
 			'page' : page,
 			'gym_id' : gym_id
@@ -268,8 +260,7 @@ function loadGymHistory(page, gym_id, pokeimg_suffix) {
 		if (internalIndex < 10) {
 			$('#gymHistory_'+gym_id).find('.loadMoreButtonHistory').hide();
 		} else {
-			$('#gymHistory_'+gym_id).find('.loadMoreButtonHistory').removeClass('hidden');
-			$('#gymHistory_'+gym_id).find('.loadMoreButtonHistory').data('page', page+1).show();
+			$('#gymHistory_'+gym_id).find('.loadMoreButtonHistory').removeClass('hidden').data('page', page+1).show();
 		}
 		$('#gymHistory_'+gym_id).find('.gymHistoryLoader').hide();
 	});
