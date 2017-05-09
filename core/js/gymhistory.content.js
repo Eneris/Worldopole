@@ -31,30 +31,48 @@ $(function () {
 
 		$('input#name').filter(':visible').val(gymName);
 
+		var gymLoader = function(pagination, stayOnPage) {
+			if (!gymHistoryLoaded || pagination) {
+				loadGyms(page, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, stayOnPage);
+				gymHistoryLoaded = true;
+				page++;
+			}
+		}
+
+		var gymShaverLoader = function(pagination) {
+			if (!gymShaverLoaded || pagination) {
+				loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
+				gymShaverLoaded = true;
+				pageShaver++;
+			}
+		}
+
+		var topShaverLoader = function(pagination) {
+			if (!topShaverLoaded || pagination) {
+				loadTopShaver();
+				topShaverLoaded = true;
+			}
+		}
 
 		$('#loadMoreButton').click(function () {
-			loadGyms(page, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, true);
-			page++;
+			gymLoader(true, false);
 		});
 
 		$('#loadMoreButtonShaver').click(function () {
-			loadGymShaver(pageShaver, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix);
-			pageShaver++;
+			gymShaverLoader(true);
 		});
 
 		$('a[href="#gymHistory"]').click(function() {
-			if (!gymHistoryLoaded) { $('#loadMoreButton').trigger('click'); }
-			gymHistoryLoaded = true;
+			gymLoader(false, false);
 		}).trigger('click');
 
 		$('a[href="#topShaver"]').click(function() {
-			if (!topShaverLoaded) { loadTopShaver(); }
-			topShaverLoaded = true;
+			topShaverLoader(false);
 		});
 
 		$('a[href="#gymShaver"]').click(function() {
-			if (!gymShaverLoaded) { $('#loadMoreButtonShaver').trigger('click'); }
-			gymShaverLoaded = true;
+			topShaverLoader(false);
+			gymShaverLoader(false);
 		});
 
 		$('#searchGyms').submit(function ( event ) {
@@ -65,9 +83,9 @@ $(function () {
 			$('#gymsContainer').empty();
 			$('#gymShaverContainer').empty();
 			if ($('a[href="#gymHistory"]').parent().hasClass('active')) {
-				$('a[href="#gymHistory"]').trigger('click');
+				gymLoader(false, true);
 			} else if ($('a[href="#gymShaver"]').parent().hasClass('active')) {
-				$('a[href="#gymShaver"]').trigger('click');
+				gymShaverLoader(false);
 			}
 			event.preventDefault();
 		});
@@ -123,11 +141,9 @@ $(function () {
 				$('#gymsContainer').empty();
 				$('#gymShaverContainer').empty();
 				if ($('a[href="#gymHistory"]').parent().hasClass('active')) {
-					loadGyms(page, $('input#name').filter(':visible').val(), teamSelector, rankingFilter, pokeimg_suffix, false);
-					page++;
-					gymHistoryLoaded = true;
+					gymLoader(false, false);
 				} else if ($('a[href="#gymShaver"]').parent().hasClass('active')) {
-					$('a[href="#gymShaver"]').trigger('click');
+					gymShaverLoader(false);
 				}
 			} else {
 				window.history.back();
