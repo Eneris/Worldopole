@@ -620,6 +620,11 @@ pokestops
 	display: inline-block !important;
 }
 
+#gymShaverStatsTable {
+	table-layout: fixed;
+	text-align: center;
+}
+
 .no-link {
 	text-decoration: none;
 	color: inherit;

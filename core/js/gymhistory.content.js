@@ -125,6 +125,12 @@ function loadTopShaver() {
 			'type' : 'gymshaver_count'
 		}
 	}).done(function (data) {
+		if (data.stats) {
+			var statsTable = $('#gymShaverStatsTable');
+			statsTable.find('.count-day').html(data.stats.day);
+			statsTable.find('.count-week').html(data.stats.week);
+			statsTable.find('.count-total').html(data.stats.total);
+		}
 		var lastCount = 0;
 		var place = 0;
 		$.each(data.entries, function (idx, entry) {

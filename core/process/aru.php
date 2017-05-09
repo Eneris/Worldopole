@@ -902,7 +902,7 @@ switch ($request) {
 
 
 	case 'gymshaver_count':
-		$req = "SELECT gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
+		$req = "SELECT gym_after.last_modified, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
 				FROM gymhistory AS gym_middle
 				JOIN gymhistory AS gym_before
 				ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
@@ -914,8 +914,23 @@ switch ($request) {
 
 		$result = $mysqli->query($req);
 
+		$stats = new stdClass();
+		$stats->total = 0;
+		$stats->week = 0;
+		$stats->day = 0;
+		$nextDay = null;
+		$nextWeek = null;
+
 		$pokemon = array();
 		while ($result && $data = $result->fetch_object()) {
+			if ($stats->total == 0) {
+				$nextDay = strtotime('-1 day', strtotime($data->last_modified));
+				$nextWeek = strtotime('-1 week', strtotime($data->last_modified));
+			}
+			$current = strtotime($data->last_modified);
+			$stats->total++;
+			if ($current> $nextDay) { $stats->week++; }
+			if ($current> $nextWeek) { $stats->day++; }
 			$pokemon_end = explode(',', $data->pokemon_uids_end);
 			$pokemon_start = explode(',', $data->pokemon_uids_start);
 			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
@@ -946,6 +961,7 @@ switch ($request) {
 
 		$json = array();
 		$json['entries'] = array_slice($entries, 0, 10);
+		$json['stats'] = $stats;
 		$locale = array();
 		$json['locale'] = $locale;
 

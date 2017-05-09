@@ -68,6 +68,15 @@
 		<div class="text-center">
 			<h3>Recent Gym Shaving</h3>
 		</div>
+		<table class="table" id="gymShaverStatsTable">
+			<thead>
+				<tr>
+					<td><strong>Last day:</strong> <span class="count-day">0</span></td>
+					<td><strong>Last week:</strong> <span class="count-week">0</span></td>
+					<td><strong>Total:</strong> <span class="count-total">0</span></td>
+				</tr>
+			</thead>
+		</table>
 		<table class="table" id="gymShaverTable">
 			<thead>
 				<tr>
