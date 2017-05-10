@@ -181,8 +181,10 @@ switch ($request) {
 				$last_location->latitude = $data->latitude;
 				$last_location->longitude = $data->longitude;
 
+				$encdetails = new stdClass();
+				$encdetails->available = false;
+
 				if ($config->system->recents_encounter_details) {
-					$encdetails = new stdClass();
 					$encdetails->cp = $data->cp;
 					$encdetails->attack = $data->individual_attack;
 					$encdetails->defense = $data->individual_defense;
@@ -192,14 +194,12 @@ switch ($request) {
 					$encdetails->iv = number_format((100/45)*($encdetails->attack+$encdetails->defense+$encdetails->stamina), 1);
 					if (isset($encdetails->cp) && isset($encdetails->attack) && isset($encdetails->defense) && isset($encdetails->stamina)) {
 						$encdetails->available = true;
-					} else {
-						$encdetails->available = false;
 					}
 				}
 
 				if ($encdetails->available) {
-					$move1 = $pokemon->move1;
-					$move2 = $pokemon->move2;
+					$move1 = $encdetails->move1;
+					$move2 = $encdetails->move2;
 					$html = '
 				<div class="col-md-1 col-xs-4 pokemon-single" data-pokeid="'.$pokeid.'" data-pokeuid="'.$pokeuid.'" title="'.$encdetails->iv.'% - '.$move->$move1->name.' / '.$move->$move2->name.'" style="display: none;">';
 				} else {
