@@ -90,9 +90,9 @@ $(function () {
 			event.preventDefault();
 		});
 
-		$(".teamSelectorItems").click(function ( event ) {
-			switch ($(this).attr("id")) {
-				case "NeutralTeamsFilter":
+		$('.teamSelectorItems').click(function ( event ) {
+			switch ($(this).attr('id')) {
+				case 'NeutralTeamsFilter':
 					teamSelector=0;
 					break;
 				case 'BlueTeamFilter':
