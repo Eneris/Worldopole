@@ -892,7 +892,7 @@ switch ($request) {
 
 
 	case 'gymshaver_count':
-		$req = "SELECT * FROM gymshaving ORDER BY last_modified DESC";
+		$req = "SELECT * FROM gymshaving ORDER BY last_modified_end DESC";
 
 		$result = $mysqli->query($req);
 
