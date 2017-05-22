@@ -813,11 +813,11 @@ switch ($request) {
 		$ranking = '0';
 		if (isset($_GET['name']) && $_GET['name'] != '') {
 			$gym_name = mysqli_real_escape_string($mysqli, $_GET['name']);
-			$where = " WHERE gym_details.name LIKE '%".$gym_name."%'";
+			$where = " WHERE name LIKE '%".$gym_name."%'";
 		}
 		if (isset($_GET['team']) && $_GET['team'] != '') {
 			$team = mysqli_real_escape_string($mysqli, $_GET['team']);
-			$where .= ($where == "" ? " WHERE" : " AND")." gym_after.team_id = ".$team;
+			$where .= ($where == "" ? " WHERE" : " AND")." team_id = ".$team;
 		}
 		if (isset($_GET['page'])) {
 			$page = mysqli_real_escape_string($mysqli, $_GET['page']);
@@ -828,30 +828,20 @@ switch ($request) {
 
 		switch ($ranking) {
 			case 1:
-				$order = " ORDER BY gym_details.name, gym_after.last_modified DESC";
+				$order = " ORDER BY name, last_modified_end DESC";
 				break;
 			case 2:
-				$order = " ORDER BY gym_after.gym_points DESC, gym_after.last_modified DESC";
+				$order = " ORDER BY gym_points_end DESC, last_modified_end DESC";
 				break;
 			default:
-				$order = " ORDER BY gym_after.last_modified DESC, gym_details.name";
+				$order = " ORDER BY last_modified_end DESC, name";
 		}
 
 		$limit = " LIMIT ".($page * 5).",5";
 
 		$entries = array();
 
-		$req = "SELECT gym_after.gym_id, gym_details.name, gym_after.team_id, (CONVERT_TZ(MAX(gym_after.last_modified), '+00:00', '".$time_offset."')) AS last_modified_end, MAX(gym_after.gym_points) AS gym_points_end, (CONVERT_TZ(MIN(gym_before.last_modified), '+00:00', '".$time_offset."')) AS last_modified_start, MAX(gym_before.gym_points) AS gym_points_start, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
-				FROM gymhistory AS gym_middle
-				JOIN gymhistory AS gym_before
-				ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
-				JOIN gymhistory AS gym_after
-				ON gym_middle.gym_id = gym_after.gym_id AND gym_middle.team_id = gym_after.team_id AND (gym_after.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified < gym_after.last_modified AND gym_middle.last_modified > (gym_after.last_modified - INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_after.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-24 AND LENGTH(gym_before.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-5 AND LENGTH(gym_before.pokemon_uids) < LENGTH(gym_after.pokemon_uids)+5
-				JOIN gymdetails AS gym_details
-				ON gym_after.gym_id = gym_details.gym_id
-				".$where."
-				GROUP BY gym_after.gym_id, gym_after.pokemon_uids, gym_before.pokemon_uids
-				".$order.$limit;
+		$req = "SELECT * FROM gymshaving".$where.$order.$limit;
 
 		$result = $mysqli->query($req);
 		while ($result && $data = $result->fetch_object()) {
@@ -902,16 +892,7 @@ switch ($request) {
 
 
 	case 'gymshaver_count':
-		$req = "SELECT gym_after.last_modified, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
-				FROM gymhistory AS gym_middle
-				JOIN gymhistory AS gym_before
-				ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
-				JOIN gymhistory AS gym_after
-				ON gym_middle.gym_id = gym_after.gym_id AND gym_middle.team_id = gym_after.team_id AND (gym_after.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified < gym_after.last_modified AND gym_middle.last_modified > (gym_after.last_modified - INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_after.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-24 AND LENGTH(gym_before.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-5 AND LENGTH(gym_before.pokemon_uids) < LENGTH(gym_after.pokemon_uids)+5
-				JOIN gymdetails AS gym_details
-				ON gym_after.gym_id = gym_details.gym_id
-				GROUP BY gym_after.gym_id, gym_after.pokemon_uids, gym_before.pokemon_uids
-				ORDER BY gym_after.last_modified DESC";
+		$req = "SELECT * FROM gymshaving ORDER BY last_modified DESC";
 
 		$result = $mysqli->query($req);
 
@@ -925,10 +906,10 @@ switch ($request) {
 		$pokemon = array();
 		while ($result && $data = $result->fetch_object()) {
 			if ($stats->total == 0) {
-				$nextDay = strtotime('-1 day', strtotime($data->last_modified));
-				$nextWeek = strtotime('-1 week', strtotime($data->last_modified));
+				$nextDay = strtotime('-1 day', strtotime($data->last_modified_end));
+				$nextWeek = strtotime('-1 week', strtotime($data->last_modified_end));
 			}
-			$current = strtotime($data->last_modified);
+			$current = strtotime($data->last_modified_end);
 			$stats->total++;
 			if ($current> $nextDay) { $stats->day++; }
 			if ($current> $nextWeek) { $stats->week++; }
