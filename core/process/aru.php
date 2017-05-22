@@ -942,7 +942,7 @@ switch ($request) {
 		usort($entries, function($a, $b) { return $a->count < $b->count; });
 
 		$json = array();
-		$json['entries'] = array_slice($entries, 0, 10);
+		$json['entries'] = array_slice($entries, 0, 20);
 		$json['stats'] = $stats;
 		$locale = array();
 		$json['locale'] = $locale;
