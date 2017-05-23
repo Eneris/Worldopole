@@ -921,7 +921,7 @@ switch ($request) {
 			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
 						FROM gympokemon
 						WHERE pokemon_uid IN ('".implode("','", $new_pokemon)."')";
-			$pkm_result = $mysqli->query($pkm_req1);
+			$pkm_result = $mysqli->query($pkm_req);
 			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
 				$pokemon_shaver[$pkm_data->pokemon_uid] = $pkm_data;
 			}
