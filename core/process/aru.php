@@ -940,7 +940,7 @@ switch ($request) {
 		}
 		$counts_victim = array();
 		foreach ($pokemon_victim as $pkm) {
-			$counts_victim[$pkm->trainer_name] = $pokemon_victim[$pkm->trainer_name] ? $pokemon_victim[$pkm->trainer_name] + 1 : 1;
+			$counts_victim[$pkm->trainer_name] = $counts_victim[$pkm->trainer_name] ? $counts_victim[$pkm->trainer_name] + 1 : 1;
 		}
 
 		$shavers = array();

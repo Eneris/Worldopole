@@ -40,7 +40,7 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs nav-justified" style="font-size:1.2em">
 			<li role="presentation" class="active"><a href="#gymHistory" aria-controls="gymHistory" role="tab" data-toggle="tab">Recent Gym Activity</a></li>
-			<li role="presentation"><a href="#topShaver" aria-controls="topShaver" role="tab" data-toggle="tab">Top 10 Gym Shavers</a></li>
+			<li role="presentation"><a href="#topShaver" aria-controls="topShaver" role="tab" data-toggle="tab">Top Gym Shavers</a></li>
 			<li role="presentation"><a href="#gymShaver" aria-controls="gymShaver" role="tab" data-toggle="tab">Recent Gym Shaving</a></li>
 		</ul>
 	</div>
