@@ -903,7 +903,8 @@ switch ($request) {
 		$nextDay = null;
 		$nextWeek = null;
 
-		$pokemon = array();
+		$pokemon_shaver = array();
+		$pokemon_victim = array();
 		while ($result && $data = $result->fetch_object()) {
 			if ($stats->total == 0) {
 				$nextDay = strtotime('-1 day', strtotime($data->last_modified_end));
@@ -916,33 +917,56 @@ switch ($request) {
 			$pokemon_end = explode(',', $data->pokemon_uids_end);
 			$pokemon_start = explode(',', $data->pokemon_uids_start);
 			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
+			$old_pokemon = array_diff($pokemon_start, $pokemon_end);
 			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
 						FROM gympokemon
 						WHERE pokemon_uid IN ('".implode("','", $new_pokemon)."')";
+			$pkm_result = $mysqli->query($pkm_req1);
+			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
+				$pokemon_shaver[$pkm_data->pokemon_uid] = $pkm_data;
+			}
+			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
+						FROM gympokemon
+						WHERE pokemon_uid IN ('".implode("','", $old_pokemon)."')";
 			$pkm_result = $mysqli->query($pkm_req);
 			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
-				$pokemon[$pkm_data->pokemon_uid] = $pkm_data;
+				$pokemon_victim[$pkm_data->pokemon_uid] = $pkm_data;
 			}
 		}
 
-		$counts = array();
-		foreach ($pokemon as $pkm) {
-				$counts[$pkm->trainer_name] = $counts[$pkm->trainer_name] ? $counts[$pkm->trainer_name] + 1 : 1;
+		$counts_shaver = array();
+		foreach ($pokemon_shaver as $pkm) {
+			$counts_shaver[$pkm->trainer_name] = $counts_shaver[$pkm->trainer_name] ? $counts_shaver[$pkm->trainer_name] + 1 : 1;
+		}
+		$counts_victim = array();
+		foreach ($pokemon_victim as $pkm) {
+			$counts_victim[$pkm->trainer_name] = $pokemon_victim[$pkm->trainer_name] ? $pokemon_victim[$pkm->trainer_name] + 1 : 1;
 		}
 
-		$entries = array();
-		$trainer_req = "SELECT * FROM trainer WHERE name IN ('".implode("','", array_keys($counts))."')";
+		$shavers = array();
+		$trainer_req = "SELECT * FROM trainer WHERE name IN ('".implode("','", array_keys($counts_shaver))."')";
 		$trainer_result = $mysqli->query($trainer_req);
 		while ($trainer_result && $trainer_data = $trainer_result->fetch_object()) {
 				$entry = $trainer_data;
-				$entry->count = $counts[$entry->name];
-				$entries[] = $entry;
+				$entry->count = $counts_shaver[$entry->name];
+				$shavers[] = $entry;
 		}
 
-		usort($entries, function($a, $b) { return $a->count < $b->count; });
+		$victims = array();
+		$trainer_req = "SELECT * FROM trainer WHERE name IN ('".implode("','", array_keys($counts_victim))."')";
+		$trainer_result = $mysqli->query($trainer_req);
+		while ($trainer_result && $trainer_data = $trainer_result->fetch_object()) {
+				$entry = $trainer_data;
+				$entry->count = $counts_victim[$entry->name];
+				$victims[] = $entry;
+		}
+
+		usort($shavers, function($a, $b) { return $a->count < $b->count; });
+		usort($victims, function($a, $b) { return $a->count < $b->count; });
 
 		$json = array();
-		$json['entries'] = array_slice($entries, 0, 20);
+		$json['shavers'] = array_slice($shavers, 0, 20);
+		$json['victims'] = array_slice($victims, 0, 20);
 		$json['stats'] = $stats;
 		$locale = array();
 		$json['locale'] = $locale;

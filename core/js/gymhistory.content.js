@@ -175,7 +175,7 @@ function loadTopShaver() {
 		}
 		var lastCount = 0;
 		var place = 0;
-		$.each(data.entries, function (idx, entry) {
+		$.each(data.shavers, function (idx, entry) {
 			if (lastCount != entry.count) {
 				place++;
 				printTopShaver(place, entry, data.locale);

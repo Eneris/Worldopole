@@ -83,7 +83,7 @@
 	<div class="row tab-pane" role="tabpanel" id="topShaver">
 		<div class="col-md-12">
 			<div class="text-center">
-				<h3>Top 10 Gym Shavers</h3>
+				<h3>Top Gym Shavers</h3>
 			</div>
 			<table class="table" id="topShaverTable">
 				<thead>
