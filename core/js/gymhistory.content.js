@@ -155,15 +155,11 @@ $(function () {
 function loadTopShaver() {
 	$('.topShaverLoader').show();
 	$.ajax({
-		'async': true,
-		'type': "GET",
+		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
-		'url': "core/process/aru.php",
+		'url': 'core/process/aru.php',
 		'data': {
-			'request': '',
-			'target': 'arrange_url',
-			'method': 'method_target',
 			'type' : 'gymshaver_count'
 		}
 	}).done(function (data) {
@@ -191,7 +187,6 @@ function loadTopShaver() {
 function loadGymShaver(page, name, teamSelector, rankingFilter, pokeimg_suffix) {
 	$('.gymShaverLoader').show();
 	$.ajax({
-		'async': true,
 		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
@@ -226,7 +221,6 @@ function loadGyms(page, name, teamSelector, rankingFilter, pokeimg_suffix, stayO
 		window.history.pushState(state, 'gymhistory', 'gymhistory?name=' + name);
 	}
 	$.ajax({
-		'async': true,
 		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
@@ -257,7 +251,6 @@ function loadGymHistory(page, gym_id, pokeimg_suffix) {
 	$('#gymHistory_'+gym_id).addClass('active').show();
 	$('#gymHistory_'+gym_id).find('.gymHistoryLoader').show();
 	$.ajax({
-		'async': true,
 		'type': 'GET',
 		'global': false,
 		'dataType': 'json',
