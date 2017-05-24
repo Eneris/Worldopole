@@ -903,8 +903,8 @@ switch ($request) {
 		$nextDay = null;
 		$nextWeek = null;
 
-		$pokemon_shaver = array();
-		$pokemon_victim = array();
+		$counts_shaver = array();
+		$counts_victim = array();
 		while ($result && $data = $result->fetch_object()) {
 			if ($stats->total == 0) {
 				$nextDay = strtotime('-1 day', strtotime($data->last_modified_end));
@@ -918,29 +918,20 @@ switch ($request) {
 			$pokemon_start = explode(',', $data->pokemon_uids_start);
 			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
 			$old_pokemon = array_diff($pokemon_start, $pokemon_end);
-			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
+			$pkm_req = "SELECT pokemon_uid, trainer_name
 						FROM gympokemon
 						WHERE pokemon_uid IN ('".implode("','", $new_pokemon)."')";
 			$pkm_result = $mysqli->query($pkm_req);
 			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
-				$pokemon_shaver[$pkm_data->pokemon_uid] = $pkm_data;
+				$counts_shaver[$pkm_data->trainer_name] = $counts_shaver[$pkm_data->trainer_name] ? $counts_shaver[$pkm_data->trainer_name] + 1 : 1;
 			}
-			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
+			$pkm_req = "SELECT pokemon_uid, trainer_name
 						FROM gympokemon
 						WHERE pokemon_uid IN ('".implode("','", $old_pokemon)."')";
 			$pkm_result = $mysqli->query($pkm_req);
 			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
-				$pokemon_victim[$pkm_data->pokemon_uid] = $pkm_data;
+				$counts_victim[$pkm_data->trainer_name] = $counts_victim[$pkm_data->trainer_name] ? $counts_victim[$pkm_data->trainer_name] + 1 : 1;
 			}
-		}
-
-		$counts_shaver = array();
-		foreach ($pokemon_shaver as $pkm) {
-			$counts_shaver[$pkm->trainer_name] = $counts_shaver[$pkm->trainer_name] ? $counts_shaver[$pkm->trainer_name] + 1 : 1;
-		}
-		$counts_victim = array();
-		foreach ($pokemon_victim as $pkm) {
-			$counts_victim[$pkm->trainer_name] = $counts_victim[$pkm->trainer_name] ? $counts_victim[$pkm->trainer_name] + 1 : 1;
 		}
 
 		$shavers = array();
