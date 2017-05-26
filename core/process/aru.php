@@ -41,7 +41,7 @@ $mysqli 	= new mysqli(SYS_DB_HOST, SYS_DB_USER, SYS_DB_PSWD, SYS_DB_NAME, SYS_DB
 if ($mysqli->connect_error != '') {
 	exit('Error MySQL Connect');
 }
-$mysqli->set_charset('utf8');
+$mysqli->set_charset('utf8mb4');
 $request = "";
 if (isset($_GET['type'])) {
 	$request = $_GET['type'];

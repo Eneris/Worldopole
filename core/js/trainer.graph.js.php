@@ -1,13 +1,13 @@
 <?php
 
-# Send Javascript header 
+# Send Javascript header
 header('Content-type: text/javascript');
 
-# Load Config 
+# Load Config
 include_once('../../config.php');
 
 
-// Include & load the variables 
+// Include & load the variables
 // ############################
 
 $variables	= SYS_PATH.'/core/json/variables.json';
@@ -18,13 +18,15 @@ $config		= json_decode(file_get_contents($variables));
 include_once('../process/locales.loader.php');
 
 
-# Connect MySQL 
+# Connect MySQL
 $mysqli = new mysqli(SYS_DB_HOST, SYS_DB_USER, SYS_DB_PSWD, SYS_DB_NAME, SYS_DB_PORT);
 if ($mysqli->connect_error != '') {
 	exit('Error MySQL Connect');
 }
 
-# Chart Graph datas	 
+$mysqli->set_charset('utf8mb4');
+
+# Chart Graph datas
 
 $trainer_lvl = [];
 # For all 3 teams
@@ -36,7 +38,7 @@ for ($teamid = 1; $teamid <= 3; $teamid++) {
 		while ($row = $result->fetch_assoc()) {
 			$data[$row["level"]] = $row["count"];
 		}
-		
+
 		# only if data isn't empty
 		if (!empty($data)) {
 			# fill empty levels counts with 0
@@ -49,7 +51,7 @@ for ($teamid = 1; $teamid <= 3; $teamid++) {
 			ksort($data);
 			$trainer_lvl[$teamid] = $data;
 		}
-		
+
 		$result->free();
 	}
 }

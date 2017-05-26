@@ -10,7 +10,7 @@ if (!defined('SYS_PATH')) {
 	echo 'Error: config.php does not exist or failed to load.<br>';
 	echo 'Check whether you renamed the config.example.php file!';
 	exit();
-} 
+}
 if (!isset($config->system)) {
 	echo 'Error: Could not load core/json/variables.json.<br>';
 	echo 'json_last_error(): '.json_last_error().'<br>';
@@ -45,6 +45,8 @@ if ($mysqli->connect_error != '') {
 	header('Location:'.HOST_URL.'offline.html');
 	exit();
 }
+
+$mysqli->set_charset('utf8mb4');
 
 
 // Perform some tests to be sure that we got datas and rights
@@ -178,7 +180,7 @@ if (!empty($page)) {
 				}
 			}
 			sort($related);
-			
+
 			// Top50 Pokemon List
 			// Don't run the query for super common pokemon because it's too heavy
 			if ($pokemon->spawn_rate < 0.20) {
@@ -204,16 +206,16 @@ if (!empty($page)) {
 					$top[] = $data;
 				}
 			}
-			
+
 			// Trainer with highest Pokemon
-			
+
 			// Make it sortable but use different variable names this time; default sort: cp DESC
 			$best_possible_sort = array('trainer_name', 'IV', 'cp', 'move_1', 'move_2', 'last_seen');
 			$best_order = isset($_GET['order']) ? $_GET['order'] : '';
 			$best_order_by = in_array($best_order, $best_possible_sort) ? $_GET['order'] : 'cp';
 			$best_direction = isset($_GET['direction']) ? 'ASC' : 'DESC';
 			$best_direction = !isset($_GET['order']) && !isset($_GET['direction']) ? 'DESC' : $best_direction;
-			
+
 			$req = "SELECT trainer_name, ROUND(SUM(100*(iv_attack+iv_defense+iv_stamina)/45),1) AS IV, move_1, move_2, cp,
 					DATE_FORMAT(last_seen, '%Y-%m-%d') AS lasttime, last_seen
 					FROM gympokemon
@@ -221,13 +223,13 @@ if (!empty($page)) {
 					GROUP BY pokemon_uid
 					ORDER BY $best_order_by $best_direction, trainer_name ASC
 					LIMIT 0,25";
-			
+
 			$result = $mysqli->query($req);
 			$toptrainer = array();
 			while ($data = $result->fetch_object()) {
 				$toptrainer[] = $data;
 			}
-			
+
 			break;
 
 		// Pokedex
