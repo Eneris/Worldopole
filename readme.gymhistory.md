@@ -62,3 +62,48 @@ DELIMITER ;
 -- Enable MySQL event scheduler
 --
 SET GLOBAL event_scheduler = ON;
+
+
+
+Use the following SQL-Statement to create the new table for gymshaving:
+========================================================================
+
+--
+-- Create and fill table `gymshaving`
+--
+
+DROP TABLE IF EXISTS gymshaving;
+CREATE TABLE gymshaving AS (SELECT gym_after.gym_id, gym_details.name, gym_after.team_id, MIN(gym_after.last_modified) AS last_modified_end, MAX(gym_after.gym_points) AS gym_points_end, MAX(gym_before.last_modified) AS last_modified_start, MAX(gym_before.gym_points) AS gym_points_start, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
+FROM (SELECT * FROM gymhistory WHERE gym_points > 4000 AND team_id > 0) AS gym_middle
+JOIN gymhistory AS gym_before
+ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
+JOIN gymhistory AS gym_after
+ON gym_middle.gym_id = gym_after.gym_id AND gym_middle.team_id = gym_after.team_id AND (gym_after.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified < gym_after.last_modified AND gym_middle.last_modified > (gym_after.last_modified - INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_after.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-24 AND LENGTH(gym_before.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-5 AND LENGTH(gym_before.pokemon_uids) < LENGTH(gym_after.pokemon_uids)+5
+JOIN gymdetails AS gym_details
+ON gym_after.gym_id = gym_details.gym_id
+GROUP BY gym_after.gym_id, gym_after.last_modified, gym_after.pokemon_uids, gym_before.pokemon_uids);
+
+
+Use the following SQL-Statement to create the event to update the gymshaving table:
+====================================================================================
+
+--
+-- Create event `gymshaving_update`
+--
+
+DELIMITER //
+CREATE EVENT IF NOT EXISTS `gymshaving_update`
+ON SCHEDULE EVERY 30 MINUTE
+DO BEGIN
+  INSERT INTO gymshaving (SELECT gym_after.gym_id, gym_details.name, gym_after.team_id, MIN(gym_after.last_modified) AS last_modified_end, MAX(gym_after.gym_points) AS gym_points_end, MAX(gym_before.last_modified) AS last_modified_start, MAX(gym_before.gym_points) AS gym_points_start, gym_after.pokemon_uids AS pokemon_uids_end, gym_before.pokemon_uids AS pokemon_uids_start
+  FROM (SELECT * FROM gymhistory WHERE gym_points > 4000 AND team_id > 0 AND last_modified > (SELECT MAX(last_modified_end) FROM gymshaving)) AS gym_middle
+  JOIN gymhistory AS gym_before
+  ON gym_middle.gym_id = gym_before.gym_id AND gym_middle.team_id = gym_before.team_id AND (gym_before.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified > gym_before.last_modified AND gym_middle.last_modified < (gym_before.last_modified + INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_before.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_before.pokemon_uids)-24
+  JOIN gymhistory AS gym_after
+  ON gym_middle.gym_id = gym_after.gym_id AND gym_middle.team_id = gym_after.team_id AND (gym_after.gym_points-gym_middle.gym_points) >= 1000 AND gym_middle.last_modified < gym_after.last_modified AND gym_middle.last_modified > (gym_after.last_modified - INTERVAL 6 MINUTE) AND LENGTH(gym_middle.pokemon_uids) < LENGTH(gym_after.pokemon_uids) AND LENGTH(gym_middle.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-24 AND LENGTH(gym_before.pokemon_uids) > LENGTH(gym_after.pokemon_uids)-5 AND LENGTH(gym_before.pokemon_uids) < LENGTH(gym_after.pokemon_uids)+5
+  JOIN gymdetails AS gym_details
+  ON gym_after.gym_id = gym_details.gym_id
+  GROUP BY gym_after.gym_id, gym_after.last_modified, gym_after.pokemon_uids, gym_before.pokemon_uids);
+END
+//
+DELIMITER ;
