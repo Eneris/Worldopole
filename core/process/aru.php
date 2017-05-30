@@ -41,7 +41,7 @@ $mysqli 	= new mysqli(SYS_DB_HOST, SYS_DB_USER, SYS_DB_PSWD, SYS_DB_NAME, SYS_DB
 if ($mysqli->connect_error != '') {
 	exit('Error MySQL Connect');
 }
-$mysqli->set_charset('utf8');
+$mysqli->set_charset('utf8mb4');
 $request = "";
 if (isset($_GET['type'])) {
 	$request = $_GET['type'];
@@ -784,6 +784,168 @@ switch ($request) {
 
 		$json = array();
 		$json['entries'] = $entries;
+		$locale = array();
+		$json['locale'] = $locale;
+
+		header('Content-Type: application/json');
+		echo json_encode($json);
+
+		break;
+
+
+	case 'gymshaver':
+		$where = '';
+		$order = '';
+		$page = '0';
+		$ranking = '0';
+		if (isset($_GET['name']) && $_GET['name'] != '') {
+			$gym_name = mysqli_real_escape_string($mysqli, $_GET['name']);
+			$where = " WHERE name LIKE '%".$gym_name."%'";
+		}
+		if (isset($_GET['team']) && $_GET['team'] != '') {
+			$team = mysqli_real_escape_string($mysqli, $_GET['team']);
+			$where .= ($where == "" ? " WHERE" : " AND")." team_id = ".$team;
+		}
+		if (isset($_GET['page'])) {
+			$page = mysqli_real_escape_string($mysqli, $_GET['page']);
+		}
+		if (isset($_GET['ranking'])) {
+			$ranking = mysqli_real_escape_string($mysqli, $_GET['ranking']);
+		}
+
+		switch ($ranking) {
+			case 1:
+				$order = " ORDER BY name, last_modified_end DESC";
+				break;
+			case 2:
+				$order = " ORDER BY gym_points_end DESC, last_modified_end DESC";
+				break;
+			default:
+				$order = " ORDER BY last_modified_end DESC, name";
+		}
+
+		$limit = " LIMIT ".($page * 5).",5";
+
+		$entries = array();
+
+		$req = "SELECT gym_id, name, team_id, gym_points_end, gym_points_start, pokemon_uids_end, pokemon_uids_start, (CONVERT_TZ(last_modified_end, '+00:00', '".$time_offset."')) AS last_modified_end, (CONVERT_TZ(last_modified_start, '+00:00', '".$time_offset."')) AS last_modified_start FROM gymshaving".$where.$order.$limit;
+
+		$result = $mysqli->query($req);
+		while ($result && $data = $result->fetch_object()) {
+			$pokemon = array();
+			$pokemon_end = explode(',', $data->pokemon_uids_end);
+			$pokemon_start = explode(',', $data->pokemon_uids_start);
+			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
+			$old_pokemon = array_diff($pokemon_start, $pokemon_end);
+			$all_pokemon = array_merge($pokemon_end, $old_pokemon);
+			foreach ($all_pokemon as $pkm) {
+				$pokemon[$pkm] = new stdClass();
+			}
+
+			$data->gym_points_diff = $data->gym_points_end - $data->gym_points_start;
+			$data->class = $data->gym_points_diff > 0 ? 'gain' : ($data->gym_points_diff < 0 ? 'loss' : '');
+
+			$pkm_req = "SELECT pokemon_uid, pokemon_id, cp, trainer_name
+						FROM gympokemon
+						WHERE pokemon_uid IN ('".implode("','", $all_pokemon)."')";
+
+			$pkm_result = $mysqli->query($pkm_req);
+			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
+				$pokemon[$pkm_data->pokemon_uid] = $pkm_data;
+			}
+			foreach ($new_pokemon as $pkm) {
+				$pokemon[$pkm]->class = 'new';
+			}
+			foreach ($old_pokemon as $pkm) {
+				$pokemon[$pkm]->class = 'old';
+			}
+
+			$data->pokemon = $pokemon;
+			unset($data->pokemon_uids_end);
+			unset($data->pokemon_uids_start);
+			$data->gym_id = str_replace('.', '_', $data->gym_id);
+			$entries[] = $data;
+		}
+
+		$json = array();
+		$json['entries'] = $entries;
+		$locale = array();
+		$json['locale'] = $locale;
+
+		header('Content-Type: application/json');
+		echo json_encode($json);
+
+		break;
+
+
+	case 'gymshaver_count':
+		$req = "SELECT * FROM gymshaving ORDER BY last_modified_end DESC";
+
+		$result = $mysqli->query($req);
+
+		$stats = new stdClass();
+		$stats->total = 0;
+		$stats->week = 0;
+		$stats->day = 0;
+		$nextDay = null;
+		$nextWeek = null;
+
+		$counts_shaver = array();
+		$counts_victim = array();
+		while ($result && $data = $result->fetch_object()) {
+			if ($stats->total == 0) {
+				$nextDay = strtotime('-1 day', strtotime($data->last_modified_end));
+				$nextWeek = strtotime('-1 week', strtotime($data->last_modified_end));
+			}
+			$current = strtotime($data->last_modified_end);
+			$stats->total++;
+			if ($current > $nextDay) { $stats->day++; }
+			if ($current > $nextWeek) { $stats->week++; }
+			$pokemon_end = explode(',', $data->pokemon_uids_end);
+			$pokemon_start = explode(',', $data->pokemon_uids_start);
+			$new_pokemon = array_diff($pokemon_end, $pokemon_start);
+			$old_pokemon = array_diff($pokemon_start, $pokemon_end);
+			$pkm_req = "SELECT pokemon_uid, trainer_name
+						FROM gympokemon
+						WHERE pokemon_uid IN ('".implode("','", $new_pokemon)."')";
+			$pkm_result = $mysqli->query($pkm_req);
+			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
+				$counts_shaver[$pkm_data->trainer_name] = $counts_shaver[$pkm_data->trainer_name] ? $counts_shaver[$pkm_data->trainer_name] + 1 : 1;
+			}
+			$pkm_req = "SELECT pokemon_uid, trainer_name
+						FROM gympokemon
+						WHERE pokemon_uid IN ('".implode("','", $old_pokemon)."')";
+			$pkm_result = $mysqli->query($pkm_req);
+			while ($pkm_result && $pkm_data = $pkm_result->fetch_object()) {
+				$counts_victim[$pkm_data->trainer_name] = $counts_victim[$pkm_data->trainer_name] ? $counts_victim[$pkm_data->trainer_name] + 1 : 1;
+			}
+		}
+
+		$shavers = array();
+		$trainer_req = "SELECT * FROM trainer WHERE name IN ('".implode("','", array_keys($counts_shaver))."')";
+		$trainer_result = $mysqli->query($trainer_req);
+		while ($trainer_result && $trainer_data = $trainer_result->fetch_object()) {
+				$entry = $trainer_data;
+				$entry->count = $counts_shaver[$entry->name];
+				$shavers[] = $entry;
+		}
+
+		$victims = array();
+		$trainer_req = "SELECT * FROM trainer WHERE name IN ('".implode("','", array_keys($counts_victim))."')";
+		$trainer_result = $mysqli->query($trainer_req);
+		while ($trainer_result && $trainer_data = $trainer_result->fetch_object()) {
+				$entry = $trainer_data;
+				$entry->count = $counts_victim[$entry->name];
+				$victims[] = $entry;
+		}
+
+		usort($shavers, function($a, $b) { return $a->count < $b->count; });
+		usort($victims, function($a, $b) { return $a->count < $b->count; });
+
+		$json = array();
+		$json['shavers'] = array_slice($shavers, 0, 20);
+		$json['victims'] = array_slice($victims, 0, 20);
+		$json['stats'] = $stats;
 		$locale = array();
 		$json['locale'] = $locale;
 
