@@ -150,6 +150,10 @@ img.unseen{
 	opacity:0.5;
 }
 
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px 6px;
+}
+
 .pokemon-single a:hover img	 {
 	background-image: url('../img/blue-hover.png');
 	background-size: 100% 100%;
@@ -221,6 +225,23 @@ Pokémon single pages
 .stats-data big {
 	font-size:3em;
 	font-weight:bold;
+}
+
+.pokedexCluster {
+	height: 60px;
+	line-height: 24px;
+	width: 48px;
+	text-align: center;
+	cursor: pointer;
+	color: white;
+	position: absolute;
+	font-size: 12px;
+	font-family: Arial,sans-serif;
+	font-weight: bold;
+	background-size: 30px 15px, 36px 36px, 48px 48px;
+	padding-top: 0px;
+	background-position: 9px 4px, 6px 18px, 0px 12px;
+	background-repeat: no-repeat;
 }
 
 /****************
@@ -453,16 +474,37 @@ trainers details styles
 	display: none;
 }
 
+.col-md-1.pokemon-single {
+    min-height: 170px;
+}
+
+@media (max-width: 1200px) {
+	.col-md-1.pokemon-single {
+	    min-height: 175px;
+	}
+}
+
+@media (max-width: 992px) {
+	.col-md-1.pokemon-single {
+	    min-height: 292px;
+	}
+}
+
+@media (max-width: 768px) {
+	.col-md-1.pokemon-single {
+	    min-height: auto;
+	}
+}
 
 /****************
 trainers search styles
 ****************/
 
-#searchTrainer button {
+#searchTrainer button, #searchGyms button {
 	height: 40px;
 }
 
-#searchTrainer input {
+#searchTrainer input, #searchGyms input {
 	height: 40px;
 }
 
@@ -487,3 +529,103 @@ trainers search styles
 	100% { transform: rotate(360deg); }
 }
 
+/****************
+pokestops
+****************/
+
+.pokeStopCluster {
+	background-image: url("../img/bubble.png"), url("../img/pokestop.png");
+	height: 48px;
+	line-height: 24px;
+	width: 48px;
+	text-align: center;
+	cursor: pointer;
+	color: white;
+	position: absolute;
+	font-size: 12px;
+	font-family: Arial,sans-serif;
+	font-weight: bold;
+	background-size: 30px 15px, 48px 48px;
+	padding-top: 2px;
+	background-repeat: no-repeat;
+	background-position: 9px 6px, 0px 0px;
+}
+
+#gymsContainer td, #gymShaverContainer td, #topShaverContainer td  {
+	vertical-align: middle;
+	line-height: 2em;
+}
+
+#gymsContainer .gymhistory table td:first-child, #gymsContainer .gymhistory table th:first-child {
+	padding-left: 10px;
+}
+
+#gymsContainer td.level, #gymShaverContainer td.level {
+	width: 68px;
+}
+
+#gymsContainer td.level img, #gymShaverContainer td.level img {
+	margin-right: .5em;
+}
+
+#gymsContainer td.loss, #gymShaverContainer td.loss {
+	color: rgb(210,118,118);
+}
+
+#gymsContainer td.gain, #gymShaverContainer td.gain {
+	color: rgb(62,150,62);
+}
+
+#gymsContainer td ul, #gymShaverContainer td ul {
+	margin-bottom: 0;
+	min-height: 65px;
+	line-height: initial;
+}
+
+#gymsContainer td ul li, #gymShaverContainer td ul li {
+	width: 5em;
+	overflow: hidden;
+	text-align: center;
+	border-radius: 5px;
+	margin-right: 2px;
+}
+
+#gymsTable > thead > tr > th:nth-child(1) {
+	width: 100px;
+}
+
+#gymsTable > thead > tr > th:nth-child(2) {
+	width: 180px;
+}
+
+@media (max-width: 768px) {
+	#gymsContainer td ul li {
+		display: none;
+	}
+	#gymsTable > thead > tr > th:last-child, #gymsTable > tbody > tr:nth-child(2n-1) > td:last-child {
+		display: none;
+	}
+	#gymsTable > thead > tr > th:nth-child(1), #gymsTable > thead > tr > th:nth-child(2) {
+		width: initial;
+	}
+}
+
+#gymsContainer td ul li.new, #gymShaverContainer td ul li.new {
+	background-color: rgba(62,150,62,.25);
+	display: inline-block !important;
+}
+
+#gymsContainer td ul li.old, #gymShaverContainer td ul li.old {
+	background-color: rgba(210,118,118,.25);
+	display: inline-block !important;
+}
+
+#gymShaverStatsTable {
+	table-layout: fixed;
+	text-align: center;
+}
+
+.no-link {
+	text-decoration: none;
+	color: inherit;
+}

@@ -1,5 +1,7 @@
 <?php
 
+header("Cache-Control: max-age=900");
+
 # Send Javascript header
 header('Content-type: text/javascript');
 

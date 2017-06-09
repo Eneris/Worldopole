@@ -18,14 +18,15 @@ include_once('core/process/data.loader.php');
 		<!-- Bootstrap -->
 		<link href="core/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css">
-		<link href="core/css/font-awesome.min.css" rel="stylesheet">
+		<link href="core/css/font-awesome.min.css?20170206" rel="stylesheet">
 		<link href="<?php auto_ver('core/css/style.css'); ?>" rel="stylesheet">
 		<?php if ($page == "pokemon") { ?>
-			<link href="<?php auto_ver('core/css/jQRangeSlider-bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php auto_ver('core/css/jQRangeSlider-bootstrap.min.css'); ?>" rel="stylesheet">
 		<?php } ?>
 	</head>
 	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-5312537636379418", enable_page_level_ads: true });</script>
 		<?php
 		// Google Analytics
 		if (is_file("analyticstracking.php")) {
@@ -79,7 +80,7 @@ include_once('core/process/data.loader.php');
 									?>
 
 									<li>
-										<a href="<?= $menu->href ?>" target="_blank" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $menu->text ?></a>
+										<a href="<?= $menu->href ?>" target="_blank" class="menu-label"><i class="fa <?= $menu->icon ?>" aria-hidden="true"></i> <?= $text ?></a>
 									</li>
 
 									<?php
@@ -166,11 +167,22 @@ include_once('core/process/data.loader.php');
 					<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 					<script src="<?php auto_ver('core/js/jQAllRangeSliders-withRuler.min.js') ?>"></script>
 					<script src="<?php auto_ver('core/js/pokemon.maps.js') ?>"></script>
+					<script src="<?php auto_ver('core/js/markerclusterer.min.js') ?>"></script>
 					<script>
 						var pokemon_id = <?= $pokemon_id ?>;
 					</script>
 					<script src="https://maps.googleapis.com/maps/api/js?key=<?= $config->system->GMaps_Key ?>&libraries=visualization&callback=initMap"></script>
-
+					<style>
+						.pokedexCluster.cluster0 {
+							background-image: url("core/img/bubble.png"), url("core/pokemons/<?= $pokemon_id.$config->system->pokeimg_suffix ?>"), url("core/img/m1.png");
+						}
+						.pokedexCluster.cluster1 {
+							background-image: url("core/img/bubble.png"), url("core/pokemons/<?= $pokemon_id.$config->system->pokeimg_suffix ?>"), url("core/img/m2.png");
+						}
+						.pokedexCluster.cluster2 {
+							background-image: url("core/img/bubble.png"), url("core/pokemons/<?= $pokemon_id.$config->system->pokeimg_suffix ?>"), url("core/img/m3.png");
+						}
+					</style>
 					<?php
 					break;
 
@@ -179,6 +191,7 @@ include_once('core/process/data.loader.php');
 
 					<script src="<?php auto_ver('core/js/pokestops.maps.js') ?>"></script>
 					<script src="https://maps.googleapis.com/maps/api/js?key=<?= $config->system->GMaps_Key ?>&libraries=visualization&callback=initMap"></script>
+					<script src="<?php auto_ver('core/js/markerclusterer.min.js') ?>"></script>
 
 					<?php
 					break;
@@ -242,13 +255,21 @@ include_once('core/process/data.loader.php');
 
 					<?php
 					break;
-					
+
 				case 'nests':
 					?>
 
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
 					<script src="core/js/nests.maps.js.php"></script>
 					<script src="https://maps.googleapis.com/maps/api/js?key=<?= $config->system->GMaps_Key ?>&libraries=visualization&callback=initMap"></script>
+
+					<?php
+					break;
+
+				case 'gymhistory':
+					?>
+
+					<script src="<?php auto_ver('core/js/gymhistory.content.js') ?>"></script>
 
 					<?php
 					break;

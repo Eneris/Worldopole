@@ -1,5 +1,6 @@
 <?php
 	# Send Javascript header
+	header("Cache-Control: max-age=21600");
 	header('Content-type: text/javascript');
 
 	# Load variables and locales
@@ -93,7 +94,7 @@ function initMap() {
 
 		// load data
 		$.getJSON("core/json/nests.stats.json", function(nestData) {
-			
+
 			for (var i = 0; i < nestData.length; i++) {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(nestData[i].lat, nestData[i].lng),
@@ -120,7 +121,7 @@ function initMap() {
 						infoWindow.close();
 					}
 				});
-		
+
 			}
 		});
 	});
